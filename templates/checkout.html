@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        🧾 Finalizar compra
+    </h2>
+
+    <p>
+        Completá tus datos para confirmar el pedido
+    </p>
+
+</section>
+
+<form method="POST" action="/medio-pago" class="checkout-form">
+
+    <!-- =======================
+         DATOS CLIENTE
+    ======================== -->
+
+    <section class="checkout-box">
+
+        <h3>Datos del cliente</h3>
+
+        <label>Nombre</label>
+        <input type="text" name="cliente_nombre" required>
+
+        <label>Teléfono</label>
+        <input type="text" name="cliente_telefono" required>
+
+    </section>
+
+    <!-- =======================
+         ENTREGA
+    ======================== -->
+
+    <section class="checkout-box">
+
+        <h3>Tipo de entrega</h3>
+
+        <label class="radio-box">
+
+            <input
+                type="radio"
+                id="retiro"
+                name="tipo_entrega"
+                value="sucursal"
+                checked
+            >
+
+            Retiro en sucursal
+
+        </label>
+
+        <label class="radio-box">
+
+            <input
+                type="radio"
+                id="domicilio"
+                name="tipo_entrega"
+                value="domicilio"
+            >
+
+            Envío a domicilio
+
+        </label>
+
+        <div id="datos-domicilio" class="delivery-box">
+
+            <label>Zona de entrega</label>
+
+            <select id="zona_envio" name="zona_envio">
+
+                <option value="0">Seleccione una zona</option>
+
+                {% for zona in zonas %}
+
+                    <option
+                        value="{{ zona.id_zona }}"
+                        data-envio="{{ zona.costo_envio }}"
+                    >
+
+                        {{ zona.nombre_zona }} (${{ zona.costo_envio }})
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <input type="hidden" id="envio_hidden" name="envio" value="0">
+
+            <button type="button" id="btn-zonas" class="btn-secundario">
+
+                Ver zonas y costos
+
+            </button>
+
+            <label>Dirección</label>
+
+            <input type="text" name="direccion">
+
+        </div>
+
+    </section>
+
+    <!-- =======================
+         OBSERVACIONES
+    ======================== -->
+
+    <section class="checkout-box">
+
+        <h3>Observaciones</h3>
+
+        <textarea name="observaciones" rows="4"></textarea>
+
+    </section>
+
+    <!-- =======================
+         RESUMEN
+    ======================== -->
+
+    <section class="checkout-resumen">
+
+        <div>
+            Subtotal: <strong>$ {{ subtotal_general }}</strong>
+        </div>
+
+        <div>
+            Envío: $ <span id="importe-envio">0</span>
+        </div>
+
+        <div class="total-final">
+
+            Total:
+
+            <span id="total-general">
+                {{ subtotal_general }}
+            </span>
+
+        </div>
+
+    </section>
+
+    <!-- =======================
+         BOTÓN FINAL
+    ======================== -->
+
+    <button type="submit" class="btn-checkout">
+
+        Continuar con el pago
+
+    </button>
+
+</form>
+
+<!-- MODAL ZONAS -->
+<div id="modal-zonas" class="modal">
+
+    <div class="modal-contenido">
+
+        <h3>Zonas de entrega</h3>
+
+        {% for zona in zonas %}
+
+            <p>
+
+                <strong>{{ zona.nombre_zona }}</strong><br>
+                {{ zona.descripcion }}<br>
+                ${{ zona.costo_envio }}
+
+            </p>
+
+            <hr>
+
+        {% endfor %}
+
+        <button id="cerrar-modal" class="btn-secundario">
+            Cerrar
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const subtotal = parseFloat(
+    "{{ subtotal_general }}"
+);
+
+const zonaSelect =
+    document.getElementById(
+        "zona_envio"
+    );
+
+const envioSpan =
+    document.getElementById(
+        "importe-envio"
+    );
+
+const totalSpan =
+    document.getElementById(
+        "total-general"
+    );
+
+const retiroRadio =
+    document.getElementById(
+        "retiro"
+    );
+
+const domicilioRadio =
+    document.getElementById(
+        "domicilio"
+    );
+
+const datosDomicilio =
+    document.getElementById(
+        "datos-domicilio"
+    );
+
+function actualizarEntrega() {
+
+    if (domicilioRadio.checked) {
+
+        datosDomicilio.style.display =
+            "block";
+
+    } else {
+
+        datosDomicilio.style.display =
+            "none";
+
+        envioSpan.innerText = 0;
+
+        totalSpan.innerText =
+            subtotal;
+    }
+}
+
+retiroRadio.addEventListener(
+    "change",
+    actualizarEntrega
+);
+
+domicilioRadio.addEventListener(
+    "change",
+    actualizarEntrega
+);
+
+actualizarEntrega();
+
+zonaSelect.addEventListener(
+    "change",
+    function() {
+
+        let envio =
+            parseFloat(
+                this.options[
+                    this.selectedIndex
+                ].dataset.envio
+            ) || 0;
+
+        envioSpan.innerText =
+            envio;
+
+        document.getElementById(
+            "envio_hidden"
+        ).value = envio;
+
+        totalSpan.innerText =
+            subtotal + envio;
+    }
+);
+
+const modal =
+    document.getElementById(
+        "modal-zonas"
+    );
+
+document
+.getElementById(
+    "btn-zonas"
+)
+.onclick = function() {
+
+    modal.style.display =
+        "block";
+};
+
+document
+.getElementById(
+    "cerrar-modal"
+)
+.onclick = function() {
+
+    modal.style.display =
+        "none";
+};
+
+</script>
+
+{% endblock %}
+

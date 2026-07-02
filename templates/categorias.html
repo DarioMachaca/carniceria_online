@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Categorías
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        🥩 Categorías
+    </h2>
+
+    <p>
+        Elegí el tipo de producto que querés comprar
+    </p>
+
+</section>
+
+<section class="grid-categorias">
+
+    {% for categoria in categorias %}
+
+        <a
+            href="/productos/{{ categoria.id_categoria }}"
+            class="categoria-card"
+        >
+
+            <img
+                src="/uploads/categorias/{{ categoria.imagen }}"
+                alt="{{ categoria.nombre }}"
+                class="categoria-img"
+            >
+
+            <div class="categoria-name">
+
+                {{ categoria.nombre }}
+
+            </div>
+
+            <div class="categoria-total">
+
+                {{ categoria.cantidad_productos }}
+                productos
+
+            </div>
+
+        </a>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}
+Configuración
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ⚙ Configuración general
+    </h2>
+
+</section>
+
+<div class="admin-actions">
+
+    <a href="/admin/config-display" class="btn-admin">
+        🖥 Config Display
+    </a>
+
+    <a href="/admin/promociones" class="btn-admin">
+        🎯 Promociones
+    </a>
+
+</div>
+
+<form
+    method="POST"
+    action="/admin/configuracion/guardar"
+    enctype="multipart/form-data"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS EMPRESA
+    ========================= -->
+
+    <label>Nombre de la empresa</label>
+
+    <input
+        type="text"
+        name="nombre_empresa"
+        value="{{ config.nombre_empresa }}"
+        required
+    >
+
+    <label>Teléfono</label>
+
+    <input
+        type="text"
+        name="telefono"
+        value="{{ config.telefono }}"
+    >
+
+    <label>Dirección</label>
+
+    <input
+        type="text"
+        name="direccion"
+        value="{{ config.direccion }}"
+    >
+
+    <label>
+    Enlace Google Maps
+    </label>
+
+    <input
+        type="text"
+        name="google_maps_url"
+        value="{{ config.google_maps_url }}"
+        placeholder="https://maps.app.goo.gl/..."
+    >
+
+    <label>WhatsApp</label>
+
+    <input
+        type="text"
+        name="whatsapp"
+        value="{{ config.whatsapp }}"
+        placeholder="5493329123456"
+    >
+
+    <label>Mensaje automático WhatsApp</label>
+
+    <textarea
+        name="whatsapp_mensaje"
+        rows="3"
+    >
+
+    {{ config.whatsapp_mensaje }}
+
+    </textarea>
+
+    <small>
+        Este mensaje aparecerá automáticamente cuando el cliente abra WhatsApp.
+    </small>
+
+    <br><br>
+
+    <label>Mostrar botón flotante</label>
+
+    <select name="mostrar_whatsapp">
+
+        <option
+            value="1"
+            {% if config.mostrar_whatsapp == 1 %}
+            selected
+            {% endif %}
+        >
+            Sí
+        </option>
+
+        <option
+            value="0"
+            {% if config.mostrar_whatsapp == 0 %}
+            selected
+            {% endif %}
+        >
+            No
+        </option>
+
+    </select>
+
+    <label>Email</label>
+
+    <input
+        type="email"
+        name="email"
+        value="{{ config.email }}"
+        placeholder="ventas@empresa.com"
+    >
+
+    <h3>
+        Horarios de atención
+    </h3>
+
+    <label>Turno mañana - Desde</label>
+
+    <input
+        type="time"
+        name="horario_manana_desde"
+        value="{{ config.horario_manana_desde }}"
+    >
+
+    <label>Turno mañana - Hasta</label>
+
+    <input
+        type="time"
+        name="horario_manana_hasta"
+        value="{{ config.horario_manana_hasta }}"
+    >
+
+    <label>Turno tarde - Desde</label>
+
+    <input
+        type="time"
+        name="horario_tarde_desde"
+        value="{{ config.horario_tarde_desde }}"
+    >
+
+    <label>Turno tarde - Hasta</label>
+
+    <input
+        type="time"
+        name="horario_tarde_hasta"
+        value="{{ config.horario_tarde_hasta }}"
+    >
+
+    <label>
+        Domingos y feriados
+    </label>
+
+    <input
+        type="text"
+        name="horario_domingos_feriados"
+        value="{{ config.horario_domingos_feriados }}"
+        placeholder="Ej: Cerrado / 09:00 a 13:00 / Consultar por WhatsApp"
+    >
+
+    <!-- =========================
+         LOGO
+    ========================= -->
+
+    <label>Logo</label>
+
+    <input
+        type="file"
+        name="logo"
+        accept="image/*"
+    >
+
+    {% if config.logo %}
+
+        <div class="admin-card">
+
+            <p><strong>Logo actual:</strong></p>
+
+            <p>{{ config.logo }}</p>
+
+        </div>
+
+    {% endif %}
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar configuración
+
+    </button>
+
+</form>
+
+
+{% endblock %}

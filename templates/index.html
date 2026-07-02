@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}
+Inicio
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h2>
+            🥩 Carnes frescas todos los días
+        </h2>
+
+        <p>
+            Calidad premium directo de la carnicería a tu mesa
+        </p>
+
+        <a href="/categorias" class="btn-principal">
+            VER PRODUCTOS
+        </a>
+
+    </div>
+
+</section>
+
+<section class="promociones">
+
+    <div class="promo-header">
+
+        🔥 PROMOCIONES EXCLUSIVAS
+
+    </div>
+
+    {% if promociones %}
+
+    <div class="slider-container">
+
+        <div class="slider-promociones">
+
+            {% for promo in promociones %}
+
+            <div class="promo-slide">
+
+                <img
+                    src="/uploads/promociones/{{ promo.imagen }}"
+                    alt="{{ promo.titulo }}"
+                >
+
+                <div class="promo-overlay">
+
+                    <h3>
+                        {{ promo.titulo }}
+                    </h3>
+
+                    {% if promo.tipo_temporizador == "fecha" %}
+
+                    <div class="promo-fecha">
+
+                        📅 Hasta el {{ promo.fecha_fin.strftime('%d/%m/%Y') }}
+
+                    </div>
+
+                    {% elif promo.tipo_temporizador == "hora" %}
+
+                    <div
+                        class="promo-timer"
+                        data-fecha-fin="{{ promo.fecha_fin }}"
+                    >
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <button class="slider-btn prev">
+            ❮
+        </button>
+
+        <button class="slider-btn next">
+            ❯
+        </button>
+
+        <div class="slider-dots">
+
+            {% for promo in promociones %}
+
+            <span class="dot"></span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+{% endblock %}

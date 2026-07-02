@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}
+Productos
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        🥩 {{ categoria.nombre }}
+    </h2>
+
+    <p>
+        Elegí la cantidad que querés agregar al carrito
+    </p>
+
+</section>
+
+<section class="grid-productos">
+
+    {% for producto in productos %}
+
+        <div class="producto-card">
+
+            <div class="producto-imagen-container">
+
+                {% if producto.destacado %}
+
+                    <div class="producto-badge">
+
+                        ⭐ Destacado
+
+                    </div>
+
+                {% endif %}
+
+                <img
+                    src="{% if producto.imagen %}/uploads/productos/{{ producto.imagen }}{% else %}/uploads/productos/sin-imagen.jpg{% endif %}"
+                    alt="{{ producto.nombre }}"
+                    class="producto-img"
+                >
+
+            </div>
+
+            <div class="producto-info">
+
+                <div class="producto-title">
+
+                    {{ producto.nombre }}
+
+                </div>
+
+                    <div class="producto-descripcion">
+
+                        {% if producto.descripcion %}
+
+                            {{ producto.descripcion }}
+
+                        {% else %}
+
+                            Información del producto
+
+                        {% endif %}
+
+                    </div>
+
+                <div class="producto-precio">
+
+                    $ {{ producto.precio }}
+
+                </div>
+
+                {% if producto.unidad_medida %}
+
+                    <div class="producto-unidad">
+
+                        Por {{ producto.unidad_medida }}
+
+                    </div>
+
+                {% endif %}
+
+                {% if producto.sin_stock %}
+
+                    <div class="sin-stock">
+
+                        SIN STOCK
+
+                    </div>
+
+                {% else %}
+
+                    <div class="cantidad">
+
+                        <button
+                            class="btn-cantidad btn-menos"
+                            data-id="{{ producto.id_producto }}"
+                        >
+                            -
+                        </button>
+
+                        <span
+                            class="cantidad-num"
+                            id="cantidad-{{ producto.id_producto }}"
+                        >
+
+                            {{ carrito.get(producto.id_producto|string, 0) }}
+
+                        </span>
+
+                        <button
+                            class="btn-cantidad btn-mas"
+                            data-id="{{ producto.id_producto }}"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+{% if total_paginas > 1 %}
+
+<div class="paginacion">
+
+    {% if pagina > 1 %}
+
+        <a
+            href="?page={{ pagina - 1 }}"
+            class="btn-pagina"
+        >
+            ← Anterior
+        </a>
+
+    {% endif %}
+
+    {% for p in range(1, total_paginas + 1) %}
+
+        <a
+            href="?page={{ p }}"
+            class="
+                btn-pagina
+                {% if p == pagina %}
+                activa
+                {% endif %}
+            "
+        >
+            {{ p }}
+        </a>
+
+    {% endfor %}
+
+    {% if pagina < total_paginas %}
+
+        <a
+            href="?page={{ pagina + 1 }}"
+            class="btn-pagina"
+        >
+            Siguiente →
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar categoría
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ✏ Editar categoría
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/categoria/actualizar/{{ categoria.id_categoria }}"
+    enctype="multipart/form-data"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS
+    ========================= -->
+
+    <label>Nombre</label>
+
+    <input
+        type="text"
+        name="nombre"
+        value="{{ categoria.nombre }}"
+        required
+    >
+
+    <label>Imagen de la categoría</label>
+
+    <input
+        type="file"
+        name="imagen"
+        accept="image/*"
+    >
+
+    {% if categoria.imagen %}
+
+        <div class="admin-card">
+
+            <p>
+
+                <strong>
+
+                    Imagen actual:
+
+                </strong>
+
+            </p>
+
+            <img
+                src="/uploads/categorias/{{ categoria.imagen }}"
+                alt="{{ categoria.nombre }}"
+                style="
+                    width:200px;
+                    max-width:100%;
+                    border-radius:10px;
+                "
+            >
+
+            <p>
+
+                {{ categoria.imagen }}
+
+            </p>
+
+        </div>
+
+    {% endif %}
+
+    <label>
+
+        <input
+            type="checkbox"
+            name="activo"
+            {% if categoria.activo %}checked{% endif %}
+        >
+
+        Activa
+
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar cambios
+
+    </button>
+
+</form>
+
+{% endblock %}

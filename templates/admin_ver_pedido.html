@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}
+Pedido {{ pedido.codigo_compra }}
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        📦 Pedido {{ pedido.codigo_compra }}
+    </h2>
+
+</section>
+
+<!-- =========================
+     DATOS PRINCIPALES
+========================= -->
+
+<section class="admin-card">
+
+    <h3>📄 Información del pedido</h3>
+
+    <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+    <p><strong>Cliente:</strong> {{ pedido.cliente_nombre }}</p>
+    <p><strong>Teléfono:</strong> {{ pedido.cliente_telefono }}</p>
+    <p><strong>Entrega:</strong> {{ pedido.tipo_entrega }}</p>
+
+    {% if pedido.direccion %}
+        <p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+    {% endif %}
+
+    {% if pedido.observaciones %}
+        <p><strong>Observaciones:</strong> {{ pedido.observaciones }}</p>
+    {% endif %}
+
+</section>
+
+<!-- =========================
+     PRODUCTOS
+========================= -->
+
+<section class="admin-card">
+
+    <h3>🥩 Productos</h3>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for item in detalle %}
+
+                <tr>
+
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>$ {{ item.precio_unitario }}</td>
+                    <td><strong>$ {{ item.subtotal }}</strong></td>
+
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- =========================
+     RESUMEN
+========================= -->
+
+<section class="admin-card">
+
+    <h3>💰 Resumen</h3>
+
+    <p><strong>Subtotal:</strong> $ {{ pedido.subtotal }}</p>
+    <p><strong>Envío:</strong> $ {{ pedido.envio }}</p>
+
+    <h3 style="color: var(--rojo);">
+        Total: $ {{ pedido.total }}
+    </h3>
+
+</section>
+
+<!-- =========================
+     ESTADOS
+========================= -->
+
+<section class="admin-card">
+
+    <h3>⚙ Estado del pedido</h3>
+
+    <form method="POST" action="/admin/actualizar-pedido/{{ pedido.id_pedido }}" class="admin-form">
+
+        <label>Estado de pago</label>
+
+        <select name="estado_pago">
+
+            <option value="pendiente" {% if pedido.estado_pago == "pendiente" %}selected{% endif %}>
+                Pendiente
+            </option>
+
+            <option value="aprobado" {% if pedido.estado_pago == "aprobado" %}selected{% endif %}>
+                Aprobado
+            </option>
+
+            <option value="rechazado" {% if pedido.estado_pago == "rechazado" %}selected{% endif %}>
+                Rechazado
+            </option>
+
+        </select>
+
+        <label>Estado del pedido</label>
+
+        <select name="estado_pedido">
+
+            <option value="pendiente" {% if pedido.estado_pedido == "pendiente" %}selected{% endif %}>
+                Pendiente
+            </option>
+
+            <option value="preparado" {% if pedido.estado_pedido == "preparado" %}selected{% endif %}>
+                Preparado
+            </option>
+
+            <option value="listo" {% if pedido.estado_pedido == "listo" %}selected{% endif %}>
+                Listo
+            </option>
+
+            <option value="entregado" {% if pedido.estado_pedido == "entregado" %}selected{% endif %}>
+                Entregado
+            </option>
+
+            <option value="cancelado" {% if pedido.estado_pedido == "cancelado" %}selected{% endif %}>
+                Cancelado
+            </option>
+
+        </select>
+
+        <button type="submit" class="btn-admin">
+
+            Guardar cambios
+
+        </button>
+
+    </form>
+
+</section>
+
+<!-- =========================
+     VOLVER
+========================= -->
+
+<section class="admin-card text-center">
+
+    <a href="/admin/pedidos" class="text-red">
+        ← Volver a pedidos
+    </a>
+
+</section>
+
+{% endblock %}

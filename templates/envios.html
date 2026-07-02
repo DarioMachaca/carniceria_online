@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+Envíos
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-info">
+
+    <h2>
+        🚚 Envíos a domicilio
+    </h2>
+
+    <p class="pagina-info-texto">
+        Consultá nuestras zonas de reparto y horarios disponibles.
+    </p>
+
+</section>
+
+{% if zonas %}
+
+    {% for zona in zonas %}
+
+    <div class="zona-card">
+
+        <div class="zona-header">
+
+            <h3>
+                📍 {{ zona.nombre_zona }}
+            </h3>
+
+        </div>
+
+        <div class="zona-body">
+
+            <p>
+
+                <strong>Barrios incluidos</strong>
+
+            </p>
+
+            <p class="zona-barrios">
+
+                {{ zona.descripcion }}
+
+            </p>
+
+            {% if zona.hora_desde and zona.hora_hasta %}
+
+            <div class="zona-info">
+
+                🕒 {{ zona.hora_desde }} a {{ zona.hora_hasta }}
+
+            </div>
+
+            {% endif %}
+
+            <div class="zona-precio">
+
+                🚚 Envío: ${{ zona.costo_envio }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+<section class="admin-card">
+
+    <p>
+
+        No hay zonas de envío configuradas.
+
+    </p>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

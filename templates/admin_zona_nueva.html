@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+Nueva zona de envío
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ➕ Nueva zona de envío
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/zona/guardar"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS ZONA
+    ========================= -->
+
+    <label>Nombre de la zona</label>
+
+    <input
+        type="text"
+        name="nombre_zona"
+        required
+        placeholder="Ej: Centro, Norte, Afueras..."
+    >
+
+    <label>Descripción</label>
+
+    <textarea
+        name="descripcion"
+        placeholder="Detalle de la zona de cobertura..."
+    ></textarea>
+
+    <label>Costo de envío</label>
+
+    <input
+        type="number"
+        step="0.01"
+        name="costo_envio"
+        required
+        placeholder="0.00"
+    >
+
+    <h3>
+        🕒 Horario de reparto
+    </h3>
+
+    <label>Desde</label>
+
+    <input
+        type="time"
+        name="hora_desde"
+    >
+
+    <label>Hasta</label>
+
+    <input
+        type="time"
+        name="hora_hasta"
+    >
+
+    <p
+        style="
+            font-size:12px;
+            opacity:.7;
+            margin-top:5px;
+        "
+    >
+
+        Ejemplo: 09:00 a 13:00
+
+    </p>
+
+    <!-- =========================
+         ESTADO
+    ========================= -->
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            checked
+        >
+        Activa
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar zona
+
+    </button>
+
+</form>
+
+{% endblock %}

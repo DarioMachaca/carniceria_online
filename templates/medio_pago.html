@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+Medio de pago
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        💳 Seleccionar medio de pago
+    </h2>
+
+    <p>
+        Elegí cómo querés pagar tu pedido
+    </p>
+
+</section>
+
+<form method="POST" action="/confirmar-pedido" class="payment-form">
+
+    <section class="payment-box">
+
+        <label class="payment-option">
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="mercadopago"
+                checked
+            >
+
+            <div>
+
+                💳 Mercado Pago
+
+                <span>Paga online de forma segura</span>
+
+            </div>
+
+        </label>
+
+        <label class="payment-option">
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="transferencia"
+            >
+
+            <div>
+
+                🏦 Transferencia bancaria
+
+                <span>Te enviamos los datos por WhatsApp</span>
+
+            </div>
+
+        </label>
+
+        <label class="payment-option">
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="efectivo"
+            >
+
+            <div>
+
+                💵 Efectivo al retirar
+
+                <span>Pagás cuando retirás en sucursal</span>
+
+            </div>
+
+        </label>
+
+    </section>
+
+    <section class="payment-total">
+
+        Total a pagar:
+
+        <div class="payment-amount">
+
+            $ {{ datos.total }}
+
+        </div>
+
+    </section>
+
+    <button type="submit" class="btn-checkout">
+
+        Confirmar pedido
+
+    </button>
+
+</form>
+
+{% endblock %}

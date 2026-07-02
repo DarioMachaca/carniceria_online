@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}
+Nuevo usuario
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ➕ Nuevo usuario
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/usuario/guardar"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS BÁSICOS
+    ========================= -->
+
+    <label>Usuario</label>
+
+    <input
+        type="text"
+        name="usuario"
+        required
+        placeholder="Nombre de usuario"
+    >
+
+    <label>Contraseña</label>
+
+    <input
+        type="password"
+        name="password"
+        required
+        placeholder="••••••••"
+    >
+
+    <label>Rol</label>
+
+    <select name="rol">
+
+        <option value="admin">Admin</option>
+        <option value="encargado">Encargado</option>
+        <option value="empleado">Empleado</option>
+
+    </select>
+
+    <!-- =========================
+         ESTADO
+    ========================= -->
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            checked
+        >
+        Activo
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar usuario
+
+    </button>
+
+</form>
+
+{% endblock %}

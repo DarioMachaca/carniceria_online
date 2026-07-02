@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar usuario
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ✏ Editar usuario
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/usuario/actualizar/{{ usuario.id_usuario }}"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS BÁSICOS
+    ========================= -->
+
+    <label>Usuario</label>
+
+    <input
+        type="text"
+        name="usuario"
+        value="{{ usuario.usuario }}"
+        required
+    >
+
+    <label>Nueva contraseña</label>
+
+    <input
+        type="password"
+        name="password"
+        placeholder="Dejar vacío para mantener la actual"
+    >
+
+    <small>
+        Si no ingresás una nueva contraseña, se mantiene la actual
+    </small>
+
+    <!-- =========================
+         ROL
+    ========================= -->
+
+    <label>Rol</label>
+
+    <select name="rol">
+
+        <option value="admin"
+            {% if usuario.rol == "admin" %}selected{% endif %}
+        >
+            Admin
+        </option>
+
+        <option value="encargado"
+            {% if usuario.rol == "encargado" %}selected{% endif %}
+        >
+            Encargado
+        </option>
+
+        <option value="empleado"
+            {% if usuario.rol == "empleado" %}selected{% endif %}
+        >
+            Empleado
+        </option>
+
+    </select>
+
+    <!-- =========================
+         ESTADO
+    ========================= -->
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            {% if usuario.activo %}checked{% endif %}
+        >
+        Activo
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar cambios
+
+    </button>
+
+</form>
+
+{% endblock %}

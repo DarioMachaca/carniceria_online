@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}
+Promociones
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+
+        🎯 Administración de Promociones
+
+    </h2>
+
+</section>
+
+<div
+    style="
+        padding:20px;
+        text-align:right;
+    "
+>
+
+    <a
+        href="/admin/promociones/nueva"
+        class="btn-admin"
+    >
+
+        ➕ Nueva promoción
+
+    </a>
+
+</div>
+
+<div
+    style="
+        padding:20px;
+    "
+>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    ID
+                </th>
+
+                <th>
+                    Título
+                </th>
+
+                <th>
+                    Activa
+                </th>
+
+                <th>
+                    Orden
+                </th>
+
+                <th>
+                    Inicio
+                </th>
+
+                <th>
+                    Fin
+                </th>
+
+                <th>
+                    Acciones
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% if promociones %}
+
+                {% for promo in promociones %}
+
+                <tr>
+
+                    <td>
+
+                        {{ promo.id_promocion }}
+
+                    </td>
+
+                    <td>
+
+                        {{ promo.titulo }}
+
+                    </td>
+
+                    <td>
+
+                        {% if promo.activo %}
+
+                            ✅ Sí
+
+                        {% else %}
+
+                            ❌ No
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ promo.orden_visualizacion }}
+
+                    </td>
+
+                    <td>
+
+                        {{ promo.fecha_inicio }}
+
+                    </td>
+
+                    <td>
+
+                        {{ promo.fecha_fin }}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="/admin/promociones/editar/{{ promo.id_promocion }}"
+                            class="btn-admin"
+                        >
+
+                            ✏ Editar
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        style="
+                            text-align:center;
+                        "
+                    >
+
+                        No hay promociones cargadas.
+
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}
+Usuarios
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        👤 Usuarios administrativos
+    </h2>
+
+</section>
+
+<!-- =========================
+     ACCIÓN PRINCIPAL
+========================= -->
+
+<section class="admin-card">
+
+    <a href="/admin/usuario/nuevo" class="btn-admin">
+        ➕ Nuevo usuario
+    </a>
+
+</section>
+
+<!-- =========================
+     LISTADO
+========================= -->
+
+<section class="admin-card">
+
+    <h3>📋 Lista de usuarios</h3>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acción</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for usuario in usuarios %}
+
+            <tr>
+
+                <td>
+                    <strong>{{ usuario.usuario }}</strong>
+                </td>
+
+                <td>
+
+                    {% if usuario.rol == "admin" %}
+
+                        🔴 Admin
+
+                    {% elif usuario.rol == "encargado" %}
+
+                        🟡 Encargado
+
+                    {% else %}
+
+                        🔵 Usuario
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if usuario.activo %}
+
+                        ✔ Activo
+
+                    {% else %}
+
+                        ❌ Inactivo
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin/usuario/editar/{{ usuario.id_usuario }}"
+                        class="btn-admin"
+                    >
+                        Editar
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}

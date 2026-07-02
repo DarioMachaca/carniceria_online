@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+Pedido confirmado
+{% endblock %}
+
+{% block content %}
+
+<section class="comprobante-container">
+
+    <div class="comprobante">
+
+        <h2>
+            ✅ Pedido confirmado
+        </h2>
+
+        <div class="comprobante-header">
+
+            <p><strong>Código:</strong> {{ datos.codigo_compra }}</p>
+            <p><strong>Fecha:</strong> {{ datos.fecha }}</p>
+            <p><strong>Estado:</strong> {{ datos.estado_pedido }}</p>
+
+        </div>
+
+        <hr>
+
+        <div class="comprobante-section">
+
+            <h3>Cliente</h3>
+
+            <p><strong>Nombre:</strong> {{ datos.cliente_nombre }}</p>
+            <p><strong>Teléfono:</strong> {{ datos.cliente_telefono }}</p>
+            <p><strong>Entrega:</strong> {{ datos.tipo_entrega }}</p>
+
+            {% if datos.direccion %}
+                <p><strong>Dirección:</strong> {{ datos.direccion }}</p>
+            {% endif %}
+
+            {% if datos.zona_nombre %}
+                <p><strong>Zona:</strong> {{ datos.zona_nombre }}</p>
+            {% endif %}
+
+            {% if datos.observaciones %}
+                <p><strong>Observaciones:</strong> {{ datos.observaciones }}</p>
+            {% endif %}
+
+        </div>
+
+        <hr>
+
+        <div class="comprobante-section">
+
+            <h3>Productos</h3>
+
+            {% for producto in datos.productos %}
+
+                <div class="comp-item">
+
+                    <span>
+                        {{ producto.nombre }} × {{ producto.cantidad }}
+                    </span>
+
+                    <strong>
+                        $ {{ producto.subtotal }}
+                    </strong>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        <hr>
+
+        <div class="comprobante-resumen">
+
+            <p>Subtotal: <strong>$ {{ datos.subtotal }}</strong></p>
+            <p>Envío: <strong>$ {{ datos.envio }}</strong></p>
+
+            <h3>
+                Total: $ {{ datos.total }}
+            </h3>
+
+            <p>
+                Medio de pago: <strong>{{ datos.medio_pago }}</strong>
+            </p>
+
+        </div>
+
+        <div class="comprobante-actions">
+
+            <a
+                class="btn-whatsapp"
+                href="https://wa.me/{{ telefono }}?text={{ mensaje_whatsapp }}"
+                target="_blank"
+            >
+                📲 Enviar por WhatsApp
+            </a>
+
+            <a class="btn-secundario" href="/">
+                Volver al inicio
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

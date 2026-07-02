@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar producto
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ✏ Editar producto
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/producto/actualizar/{{ producto.id_producto }}"
+    enctype="multipart/form-data"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         CATEGORÍA
+    ========================= -->
+
+    <label>Categoría</label>
+
+    <select name="id_categoria">
+
+        {% for categoria in categorias %}
+
+            <option
+                value="{{ categoria.id_categoria }}"
+                {% if categoria.id_categoria == producto.id_categoria %}
+                    selected
+                {% endif %}
+            >
+
+                {{ categoria.nombre }}
+
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <!-- =========================
+         DATOS PRINCIPALES
+    ========================= -->
+
+    <label>Nombre</label>
+
+    <input
+        type="text"
+        name="nombre"
+        value="{{ producto.nombre }}"
+        required
+    >
+
+    <label>Descripción</label>
+
+    <textarea name="descripcion">{{ producto.descripcion }}</textarea>
+
+    <label>Unidad de medida</label>
+
+    <select name="unidad_medida">
+
+        <option
+            value="kg"
+            {% if producto.unidad_medida == "kg" %}
+            selected
+            {% endif %}
+        >
+            Kilogramo (kg)
+        </option>
+
+        <option
+            value="unidad"
+            {% if producto.unidad_medida == "unidad" %}
+            selected
+            {% endif %}
+        >
+            Unidad
+        </option>
+
+        <option
+            value="docena"
+            {% if producto.unidad_medida == "docena" %}
+            selected
+            {% endif %}
+        >
+            Docena
+        </option>
+
+    </select>
+
+    <label>Precio</label>
+
+    <input
+        type="number"
+        step="0.01"
+        name="precio"
+        value="{{ producto.precio }}"
+        required
+    >
+
+    <!-- =========================
+         IMAGEN
+    ========================= -->
+
+    <label>Imagen</label>
+
+    <input
+        type="file"
+        name="imagen"
+        accept="image/*"
+    >
+
+    {% if producto.imagen %}
+
+        <div class="admin-card">
+
+            <p>
+
+                <strong>Imagen actual:</strong>
+
+            </p>
+
+            <img
+                src="/uploads/productos/{{ producto.imagen }}"
+                class="admin-producto-preview"
+                alt="{{ producto.nombre }}"
+            >
+
+        </div>
+
+    {% endif %}
+
+    <!-- =========================
+         CONFIGURACIÓN
+    ========================= -->
+
+    <label>Orden visual</label>
+
+    <input
+        type="number"
+        name="orden_visual"
+        value="{{ producto.orden_visual }}"
+    >
+
+    <label>
+        <input
+            type="checkbox"
+            name="destacado"
+            {% if producto.destacado %}
+            checked
+            {% endif %}
+        >
+        ⭐ Producto destacado
+    </label>
+
+    <label>
+        <input
+            type="checkbox"
+            name="sin_stock"
+            {% if producto.sin_stock %}
+            checked
+            {% endif %}
+        >
+        Sin stock
+    </label>
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            {% if producto.activo %}
+            checked
+            {% endif %}
+        >
+        Activo
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar cambios
+
+    </button>
+
+</form>
+
+{% endblock %}

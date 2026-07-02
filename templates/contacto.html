@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contacto
+{% endblock %}
+
+{% block content %}
+
+<section class="contacto-container">
+
+<div class="info-card">
+
+    <h2>
+        📞 Contactanos
+    </h2>
+
+    <p>
+        Estamos listos para recibir tu pedido y responder cualquier consulta.
+    </p>
+
+</div>
+
+<div class="contacto-acciones">
+
+    {% if config.whatsapp %}
+
+    <a
+        href="https://wa.me/{{ config.whatsapp }}"
+        target="_blank"
+        class="btn-principal"
+    >
+        💬 WhatsApp
+    </a>
+
+    {% endif %}
+
+    {% if config.telefono %}
+
+    <a
+        href="tel:{{ config.telefono }}"
+        class="btn-principal"
+    >
+        📞 Llamar
+    </a>
+
+    {% endif %}
+
+    {% if config.google_maps_url %}
+
+    <a
+        href="{{ config.google_maps_url }}"
+        target="_blank"
+        class="btn-principal"
+    >
+        📍 Cómo llegar
+    </a>
+
+    {% endif %}
+
+</div>
+
+<div class="info-card">
+
+    <h3>
+        Información de contacto
+    </h3>
+
+    <p>
+        <strong>📍 Dirección:</strong>
+        {{ config.direccion }}
+    </p>
+
+    <p>
+        <strong>📞 Teléfono:</strong>
+        {{ config.telefono }}
+    </p>
+
+    <p>
+        <strong>📧 Email:</strong>
+        {{ config.email }}
+    </p>
+
+    <hr>
+
+    <h3>
+        🕒 Horarios de atención
+    </h3>
+
+    <p>
+        <strong>Lunes a Sábado</strong>
+    </p>
+
+    <p>
+        {{ config.horario_manana_desde }}
+        -
+        {{ config.horario_manana_hasta }}
+    </p>
+
+    <p>
+        {{ config.horario_tarde_desde }}
+        -
+        {{ config.horario_tarde_hasta }}
+    </p>
+
+    <p>
+        <strong>Domingos y feriados</strong>
+    </p>
+
+    <p>
+        {{ config.horario_domingos_feriados }}
+    </p>
+
+</div>
+
+{% if config.whatsapp %}
+
+<div class="info-card">
+
+    <a
+        href="https://wa.me/{{ config.whatsapp }}?text={{ config.whatsapp_mensaje }}"
+        target="_blank"
+        class="btn-principal"
+    >
+        💬 HACER PEDIDO POR WHATSAPP
+    </a>
+
+</div>
+
+{% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        📊 Panel Administrativo
+    </h2>
+
+    <p>
+        Bienvenido <strong>{{ session.admin.usuario }}</strong>
+    </p>
+
+    <p>
+        Rol: <strong>{{ session.admin.rol }}</strong>
+    </p>
+
+</section>
+
+<!-- =========================
+     KPIs
+========================= -->
+
+<section class="admin-grid">
+
+    <div class="admin-card">
+
+        <h3>Pedidos</h3>
+
+        <p>Pendientes: <strong>{{ pedidos_pendientes }}</strong></p>
+        <p>Preparados: <strong>{{ pedidos_preparados }}</strong></p>
+        <p>Listos: <strong>{{ pedidos_listos }}</strong></p>
+
+    </div>
+
+    <div class="admin-card">
+
+        <h3>Ventas</h3>
+
+        <p>Hoy: <strong>$ {{ ventas_hoy }}</strong></p>
+        <p>Este mes: <strong>$ {{ ventas_mes }}</strong></p>
+
+    </div>
+
+    <div class="admin-card">
+
+        <h3>Productos</h3>
+
+        <p>Sin stock: <strong>{{ productos_sin_stock }}</strong></p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ACCESOS RÁPIDOS
+========================= -->
+
+<section class="admin-card">
+
+    <h3>Accesos rápidos</h3>
+
+    <div class="admin-actions">
+
+        <a href="/admin/pedidos" class="btn-admin">
+            📦 Pedidos
+        </a>
+
+        {% if session.admin.rol in ['admin', 'encargado'] %}
+
+            <a href="/admin/productos" class="btn-admin">
+                🥩 Productos
+            </a>
+
+            <a href="/admin/categorias" class="btn-admin">
+                📂 Categorías
+            </a>
+
+        {% endif %}
+
+        {% if session.admin.rol == "admin" %}
+
+            <a href="/admin/configuracion" class="btn-admin">
+                ⚙ Configuración
+            </a>
+
+            <a href="/admin/zonas-envio" class="btn-admin">
+                🚚 Zonas de envío
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<!-- =========================
+     LOGOUT
+========================= -->
+
+<section class="admin-card text-center">
+
+    <a href="/admin/logout" class="text-red">
+        Cerrar sesión
+    </a>
+
+</section>
+
+{% endblock %}

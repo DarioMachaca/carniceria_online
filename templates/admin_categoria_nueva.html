@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Nueva categoría
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ➕ Nueva categoría
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/categoria/guardar"
+    enctype="multipart/form-data"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS
+    ========================= -->
+
+    <label>Nombre</label>
+
+    <input
+        type="text"
+        name="nombre"
+        required
+        placeholder="Ej: Vacunos, Pollo, Cerdo..."
+    >
+
+    <label>Imagen de la categoría</label>
+
+    <input
+        type="file"
+        name="imagen"
+        accept="image/*"
+    >
+
+    <small>
+
+        Recomendado:
+        imagen horizontal de 800x600 px.
+
+    </small>
+
+    <br><br>
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            checked
+        >
+        Activa
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar categoría
+
+    </button>
+
+</form>
+
+{% endblock %}

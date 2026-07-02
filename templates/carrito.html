@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}
+Mi Carrito
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        🛒 Mi Carrito
+    </h2>
+
+    <p>
+        Revisá tu pedido antes de continuar
+    </p>
+
+</section>
+
+<section class="carrito-container">
+
+    {% for producto in productos %}
+
+        <div class="carrito-item">
+
+            <div class="carrito-info">
+
+                <div class="carrito-nombre">
+                    {{ producto.nombre }}
+                </div>
+
+                <div class="carrito-precio">
+                    $ {{ producto.precio }}
+                </div>
+
+                <div class="carrito-subtotal">
+                    Subtotal: <strong>$ {{ producto.subtotal }}</strong>
+                </div>
+
+            </div>
+
+            <div class="carrito-controles">
+
+                <a href="/quitar-carrito/{{ producto.id_producto }}">
+                    <button class="btn-cantidad">-</button>
+                </a>
+
+                <span class="cantidad-num">
+
+                    {{ producto.cantidad }}
+
+                    {% if producto.unidad_medida == 'kg' %}
+                        kg
+                    {% else %}
+                        un
+                    {% endif %}
+
+                </span>
+
+                <a href="/agregar-carrito/{{ producto.id_producto }}">
+                    <button class="btn-cantidad">+</button>
+                </a>
+
+            </div>
+
+            <div class="carrito-eliminar">
+
+                <a href="/eliminar-carrito/{{ producto.id_producto }}">
+                    🗑 Eliminar
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+<section class="carrito-total">
+
+    <h3>
+        TOTAL: $ {{ total_general }}
+    </h3>
+
+</section>
+
+<section class="carrito-acciones">
+
+    <a href="/categorias" class="btn-secundario">
+        Seguir comprando
+    </a>
+
+    <a href="/checkout" class="btn-principal">
+        Continuar compra
+    </a>
+
+</section>
+
+{% endblock %}

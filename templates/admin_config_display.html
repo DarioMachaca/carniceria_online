@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}
+Config Display
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+
+        🖥 Configuración de Display
+
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/config-display/guardar"
+    class="admin-card admin-form"
+>
+
+    <label>
+
+        Banner activo
+
+    </label>
+
+    <select
+        name="banner_activo"
+    >
+
+        <option value="1">
+            Sí
+        </option>
+
+        <option value="0">
+            No
+        </option>
+
+    </select>
+
+    <label>
+
+        Texto del banner
+
+    </label>
+
+    <input
+        type="text"
+        name="banner_texto"
+        placeholder="🔥 Happy Hour 20% OFF"
+    >
+
+    <label>
+
+        Color de fondo banner
+
+    </label>
+
+    <input
+        type="color"
+        name="banner_color"
+        value="#F23041"
+    >
+
+    <label>
+
+        Color texto banner
+
+    </label>
+
+    <input
+        type="color"
+        name="banner_texto_color"
+        value="#000000"
+    >
+
+    <label>
+
+        Mensaje de envío
+
+    </label>
+
+    <input
+        type="text"
+        name="mensaje_envio"
+        placeholder="🚚 Envíos a domicilio todos los días"
+    >
+
+    <label>
+
+        Mostrar mensaje envío
+
+    </label>
+
+    <select
+        name="mostrar_mensaje_envio"
+    >
+
+        <option value="1">
+            Sí
+        </option>
+
+        <option value="0">
+            No
+        </option>
+
+    </select>
+
+    <br>
+
+    <button
+        type="submit"
+        class="btn-admin"
+    >
+
+        💾 Guardar configuración
+
+    </button>
+
+</form>
+
+{% endblock %}

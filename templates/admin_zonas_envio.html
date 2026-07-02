@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+Zonas de envío
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        🚚 Zonas de envío
+    </h2>
+
+</section>
+
+<!-- =========================
+     ACCIÓN PRINCIPAL
+========================= -->
+
+<section class="admin-card">
+
+    <a href="/admin/zona/nueva" class="btn-admin">
+        ➕ Nueva zona
+    </a>
+
+</section>
+
+<!-- =========================
+     LISTADO
+========================= -->
+
+<section class="admin-card">
+
+    <h3>📍 Zonas configuradas</h3>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Zona</th>
+                <th>Barrios</th>
+                <th>Horario</th>
+                <th>Costo</th>
+                <th>Estado</th>
+                <th>Acción</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for zona in zonas %}
+
+            <tr>
+
+                <td>
+                    <strong>{{ zona.nombre_zona }}</strong>
+                </td>
+
+                <td>
+
+                    {{ zona.descripcion }}
+
+                </td>
+
+                <td>
+
+                    {% if zona.hora_desde and zona.hora_hasta %}
+
+                        {{ zona.hora_desde }} - {{ zona.hora_hasta }}
+
+                    {% else %}
+
+                        Sin horario
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <strong>
+
+                        $ {{ zona.costo_envio }}
+
+                    </strong>
+
+                </td>
+
+                <td>
+
+                    {% if zona.activo %}
+
+                        ✔ Activa
+
+                    {% else %}
+
+                        ❌ Inactiva
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin/zona/editar/{{ zona.id_zona }}"
+                        class="btn-admin"
+                    >
+                        Editar
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}

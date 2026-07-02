@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Categorías
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        📂 Administración de categorías
+    </h2>
+
+</section>
+
+<!-- =========================
+     ACCIÓN PRINCIPAL
+========================= -->
+
+<section class="admin-card">
+
+    <a href="/admin/categoria/nueva" class="btn-admin">
+        ➕ Nueva categoría
+    </a>
+
+</section>
+
+<!-- =========================
+     LISTADO
+========================= -->
+
+<section class="admin-card">
+
+    <h3>📋 Categorías registradas</h3>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acción</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for categoria in categorias %}
+
+            <tr>
+
+                <td>{{ categoria.id_categoria }}</td>
+
+                <td>
+
+                    {% if categoria.imagen %}
+
+                        <img
+                            src="/uploads/categorias/{{ categoria.imagen }}"
+                            alt="{{ categoria.nombre }}"
+                            style="
+                                width:70px;
+                                height:70px;
+                                object-fit:cover;
+                                border-radius:10px;
+                            "
+                        >
+
+                    {% else %}
+
+                        Sin imagen
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <strong>
+
+                        {{ categoria.nombre }}
+
+                    </strong>
+
+                </td>
+                <td>
+
+                    {% if categoria.activo %}
+
+                        ✔ Activa
+
+                    {% else %}
+
+                        ❌ Inactiva
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin/categoria/editar/{{ categoria.id_categoria }}"
+                        class="btn-admin"
+                    >
+                        Editar
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}

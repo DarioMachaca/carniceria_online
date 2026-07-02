@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        {% block title %}
+        Carnicería Demo
+        {% endblock %}
+
+    </title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    {% if display and display.banner_activo %}
+
+    <div
+        class="top-banner"
+        style="
+            --banner-bg: {{ display.banner_color }};
+            --banner-text: {{ display.banner_texto_color }};
+        "
+    >
+
+        {{ display.banner_texto }}
+
+    </div>
+
+    {% endif %}
+
+    <header class="header">
+
+        <div class="logo-container">
+
+            {% if config and config.logo %}
+
+            <img
+                src="/uploads/logo/{{ config.logo }}"
+                alt="{{ config.nombre_empresa }}"
+                class="logo-img"
+            >
+
+            {% endif %}
+
+            <h1 class="logo">
+
+                    {{ config.nombre_empresa }}
+
+            </h1>
+
+        </div>
+
+    </header>
+
+    <nav class="nav">
+
+        <div class="nav-container">
+
+            <button class="menu-btn">
+
+                ☰ Menú
+
+            </button>
+            
+            <div
+                id="menu-lateral"
+                class="menu-lateral"
+            >
+
+                <button
+                    id="cerrar-menu"
+                    class="cerrar-menu"
+                >
+                    ✕
+                </button>
+
+                <a href="/">
+                    🏠 Inicio
+                </a>
+
+                <a href="/categorias">
+                    📂 Categorías
+                </a>
+
+                <a href="/envios">
+                    🚚 Envíos
+                </a>
+
+                <a href="/medios-pago">
+                    💳 Medios de Pago
+                </a>
+
+                <a href="/contacto">
+                    📞 Contacto
+                </a>
+
+                <a href="/mi-carrito">
+                    🛒 Mi Carrito
+                </a>
+
+            </div>
+
+            <div
+                id="overlay-menu"
+                class="overlay-menu"
+            ></div>
+
+            <a
+                href="/mi-carrito"
+                class="cart-link"
+            >
+
+                🛒 Carrito
+
+                <span class="cart-badge">
+
+                    {{ cantidad_items }}
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <main class="container">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-empresa">
+                
+                {% if config.logo %}
+
+                <img
+                    src="/uploads/logo/{{ config.logo }}"
+                    class="footer-logo"
+                >
+
+                {% endif %}
+
+                <h3>
+
+                    {{ config.nombre_empresa }}
+
+                </h3>
+
+                <p>
+
+                    📍 {{ config.direccion }}
+
+                </p>
+
+                <p>
+
+                    📞 {{ config.telefono }}
+
+                </p>
+
+                <p>
+
+                    💬 {{ config.whatsapp }}
+
+                </p>
+
+                <p>
+
+                    ✉ {{ config.email }}
+
+                </p>
+
+            </div>
+
+            <div class="footer-horarios">
+
+                <h3>
+
+                    Horarios de atención
+
+                </h3>
+
+                <p>
+
+                    🌅 Mañana:
+                    {{ config.horario_manana_desde }}
+                    -
+                    {{ config.horario_manana_hasta }}
+
+                </p>
+
+                <p>
+
+                    🌇 Tarde:
+                    {{ config.horario_tarde_desde }}
+                    -
+                    {{ config.horario_tarde_hasta }}
+
+                </p>
+
+                <p>
+
+                    🎉 Domingos y feriados:
+                    {{ config.horario_domingos_feriados }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+
+                © {{ config.nombre_empresa }}
+
+            </p>
+
+            <p>
+
+                Desarrollado por Nubinex - Servicios Digitales
+
+            </p>
+
+        </div>
+
+    </footer>
+
+    {% if config.mostrar_whatsapp %}
+
+    <a
+        href="https://wa.me/{{ config.whatsapp }}?text={{ config.whatsapp_mensaje | urlencode }}"
+        class="whatsapp-float"
+        target="_blank"
+    >
+        💬 WhatsApp
+    </a>
+
+    {% endif %}
+
+    <script
+        src="{{ url_for(
+            'static',
+            filename='js/slider.js'
+        ) }}"
+    ></script>
+    
+    <script
+        src="{{ url_for(
+            'static',
+            filename='js/menu.js'
+        ) }}"
+    ></script>
+
+    <script
+        src="{{ url_for(
+            'static',
+            filename='js/carrito.js'
+        ) }}"
+    ></script>
+
+</body>
+
+</html>

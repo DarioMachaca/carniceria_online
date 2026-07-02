@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar zona de envío
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        ✏ Editar zona de envío
+    </h2>
+
+</section>
+
+<form
+    method="POST"
+    action="/admin/zona/actualizar/{{ zona.id_zona }}"
+    class="admin-card admin-form"
+>
+
+    <!-- =========================
+         DATOS ZONA
+    ========================= -->
+
+    <label>Nombre de la zona</label>
+
+    <input
+        type="text"
+        name="nombre_zona"
+        value="{{ zona.nombre_zona }}"
+        required
+    >
+
+    <label>Descripción</label>
+
+    <textarea
+        name="descripcion"
+    >{{ zona.descripcion }}</textarea>
+
+    <label>Costo de envío</label>
+
+    <input
+        type="number"
+        step="0.01"
+        name="costo_envio"
+        value="{{ zona.costo_envio }}"
+        required
+    >
+
+    <h3>
+        🕒 Horario de reparto
+    </h3>
+
+    <label>Desde</label>
+
+    <input
+        type="time"
+        name="hora_desde"
+        value="{{ zona.hora_desde }}"
+    >
+
+    <label>Hasta</label>
+
+    <input
+        type="time"
+        name="hora_hasta"
+        value="{{ zona.hora_hasta }}"
+    >
+
+    <p
+        style="
+            font-size:12px;
+            opacity:.7;
+            margin-top:5px;
+        "
+    >
+
+        Ejemplo: 09:00 a 13:00
+
+    </p>
+
+    <!-- =========================
+         ESTADO
+    ========================= -->
+
+    <label>
+        <input
+            type="checkbox"
+            name="activo"
+            {% if zona.activo %}checked{% endif %}
+        >
+        Activa
+    </label>
+
+    <!-- =========================
+         BOTÓN
+    ========================= -->
+
+    <br>
+
+    <button type="submit" class="btn-admin">
+
+        💾 Guardar cambios
+
+    </button>
+
+</form>
+
+{% endblock %}

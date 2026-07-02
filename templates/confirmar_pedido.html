@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+Confirmar pedido
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        📦 Confirmar pedido
+    </h2>
+
+    <p>
+        Revisá toda la información antes de finalizar la compra
+    </p>
+
+</section>
+
+<!-- =========================
+     DATOS CLIENTE
+========================= -->
+
+<section class="checkout-box">
+
+    <h3>Datos del cliente</h3>
+
+    <p><strong>Nombre:</strong> {{ datos.cliente_nombre }}</p>
+    <p><strong>Teléfono:</strong> {{ datos.cliente_telefono }}</p>
+
+</section>
+
+<!-- =========================
+     ENTREGA
+========================= -->
+
+<section class="checkout-box">
+
+    <h3>Entrega</h3>
+
+    <p><strong>Tipo:</strong> {{ datos.tipo_entrega }}</p>
+    <p><strong>Dirección:</strong> {{ datos.direccion }}</p>
+
+</section>
+
+<!-- =========================
+     PAGO
+========================= -->
+
+<section class="checkout-box">
+
+    <h3>Medio de pago</h3>
+
+    <p>{{ datos.medio_pago }}</p>
+
+</section>
+
+<!-- =========================
+     OBSERVACIONES
+========================= -->
+
+<section class="checkout-box">
+
+    <h3>Observaciones</h3>
+
+    <p>{{ datos.observaciones }}</p>
+
+</section>
+
+<!-- =========================
+     PRODUCTOS
+========================= -->
+
+<section class="checkout-box">
+
+    <h3>Productos</h3>
+
+    {% for producto in productos %}
+
+        <div class="confirm-item">
+
+            <span>
+                {{ producto.nombre }} × {{ producto.cantidad }}
+            </span>
+
+            <strong>
+                $ {{ producto.subtotal }}
+            </strong>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+<!-- =========================
+     RESUMEN FINAL
+========================= -->
+
+<section class="checkout-resumen">
+
+    <div>
+        Subtotal: <strong>$ {{ datos.subtotal }}</strong>
+    </div>
+
+    <div>
+        Envío: $ {{ datos.envio }}
+    </div>
+
+    <div class="total-final">
+
+        Total:
+
+        <span>
+            $ {{ datos.total }}
+        </span>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ACCIÓN FINAL
+========================= -->
+
+<form method="POST" action="/guardar-pedido">
+
+    <button type="submit" class="btn-checkout">
+
+        ✅ Confirmar compra
+
+    </button>
+
+</form>
+
+{% endblock %}

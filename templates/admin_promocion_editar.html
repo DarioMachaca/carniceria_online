@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar Promoción
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+    <h2>✏ Editar Promoción</h2>
+</section>
+
+<form
+    method="POST"
+    action="/admin/promociones/actualizar/{{ promo.id_promocion }}"
+    enctype="multipart/form-data"
+    class="admin-card admin-form"
+>
+
+    <label>Título</label>
+    <input type="text" name="titulo" value="{{ promo.titulo }}">
+
+    <label>Descripción</label>
+    <textarea name="descripcion">{{ promo.descripcion }}</textarea>
+
+    <label>Imagen actual</label>
+    {% if promo.imagen %}
+        <p>{{ promo.imagen }}</p>
+    {% endif %}
+
+    <input type="file" name="imagen">
+
+    <div class="admin-info-box">
+
+        <strong>Recomendación:</strong>
+
+        Utilice imágenes horizontales de 1600 x 600 px para que se vean correctamente en computadoras, tablets y celulares.
+
+    </div>
+
+    <label>Fecha inicio</label>
+    <input type="datetime-local" name="fecha_inicio">
+
+    <label>Fecha fin</label>
+    <input type="datetime-local" name="fecha_fin">
+
+    <label>Tipo de temporizador</label>
+
+    <select name="tipo_temporizador">
+
+        <option
+            value="ninguno"
+            {% if promo.tipo_temporizador == 'ninguno' %}selected{% endif %}
+        >
+            No mostrar
+        </option>
+
+        <option
+            value="fecha"
+            {% if promo.tipo_temporizador == 'fecha' %}selected{% endif %}
+        >
+            Mostrar fecha fin
+        </option>
+
+        <option
+            value="hora"
+            {% if promo.tipo_temporizador == 'hora' %}selected{% endif %}
+        >
+            Mostrar cuenta regresiva
+        </option>
+
+    </select>
+
+    <label>Activo</label>
+    <select name="activo">
+        <option value="1" {% if promo.activo == 1 %}selected{% endif %}>Sí</option>
+        <option value="0" {% if promo.activo == 0 %}selected{% endif %}>No</option>
+    </select>
+
+    <label>Orden visualización</label>
+    <input type="number" name="orden_visualizacion" value="{{ promo.orden_visualizacion }}">
+
+    <br>
+
+    <button class="btn-admin" type="submit">
+        💾 Actualizar
+    </button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}
+Productos
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        🥩 Administración de productos
+    </h2>
+
+</section>
+
+<!-- =========================
+     ACCIÓN PRINCIPAL
+========================= -->
+
+<section class="admin-card">
+
+    <a href="/admin/producto/nuevo" class="btn-admin">
+        ➕ Nuevo producto
+    </a>
+
+</section>
+
+<section class="admin-card">
+
+    <form
+        method="GET"
+        action="/admin/productos"
+        class="admin-filtros"
+    >
+
+        <input
+            type="text"
+            name="buscar"
+            value="{{ buscar }}"
+            placeholder="Buscar producto..."
+        >
+
+        <select name="categoria">
+
+            <option value="">
+                Todas las categorías
+            </option>
+
+            {% for categoria in categorias %}
+
+                <option
+                    value="{{ categoria.id_categoria }}"
+                    {% if categoria_filtro|string == categoria.id_categoria|string %}
+                    selected
+                    {% endif %}
+                >
+                    {{ categoria.nombre }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button
+            type="submit"
+            class="btn-admin"
+        >
+            🔍 Buscar
+        </button>
+
+    </form>
+
+</section>
+
+<!-- =========================
+     TABLA
+========================= -->
+
+<section class="admin-card">
+
+    <h3>📦 Listado de productos</h3>
+
+    <table class="admin-table">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Destacado</th>
+                <th>Orden</th>
+                <th>Stock</th>
+                <th>Activo</th>
+                <th>Acción</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for producto in productos %}
+
+            <tr>
+
+                <td>{{ producto.id_producto }}</td>
+
+                <td>
+
+                    {% if producto.imagen %}
+
+                        <img
+                            src="/uploads/productos/{{ producto.imagen }}"
+                            class="admin-producto-img"
+                            alt="{{ producto.nombre }}"
+                        >
+
+                    {% else %}
+
+                        —
+        
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    <strong>{{ producto.nombre }}</strong>
+                </td>
+
+                <td>{{ producto.categoria }}</td>
+
+                <td>
+                    <strong>$ {{ producto.precio }}</strong>
+                </td>
+
+                <td>
+
+                    {% if producto.destacado %}
+
+                        ⭐ Sí
+
+                    {% else %}
+
+                        —
+
+                    {% endif %}
+
+                </td>
+
+                <td>{{ producto.orden_visual }}</td>
+
+                <td>
+
+                    {% if producto.sin_stock %}
+
+                        <span class="text-red">
+                            Sin stock
+                        </span>
+
+                    {% else %}
+
+                        Disponible
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if producto.activo %}
+
+                        ✔ Sí
+
+                    {% else %}
+
+                        ❌ No
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin/producto/editar/{{ producto.id_producto }}"
+                        class="btn-admin"
+                    >
+                        Editar
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% if total_paginas > 1 %}
+
+    <div class="admin-paginacion">
+
+        {% if pagina > 1 %}
+
+            <a
+                href="?pagina={{ pagina - 1 }}&buscar={{ buscar }}&categoria={{ categoria_filtro }}"
+                class="btn-admin"
+            >
+                ← Anterior
+            </a>
+
+        {% endif %}
+
+        <span>
+
+            Página {{ pagina }}
+            de
+            {{ total_paginas }}
+
+        </span>
+
+        {% if pagina < total_paginas %}
+
+            <a
+                href="?pagina={{ pagina + 1 }}&buscar={{ buscar }}&categoria={{ categoria_filtro }}"
+                class="btn-admin"
+            >
+                Siguiente →
+            </a>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
