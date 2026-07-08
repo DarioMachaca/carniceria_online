@@ -1059,6 +1059,7 @@ def guardar_configuracion():
         UPDATE configuracion
         SET
             nombre_empresa = %s,
+            slogan = %s,
             telefono = %s,
             direccion = %s,
             google_maps_url = %s,
@@ -1076,6 +1077,7 @@ def guardar_configuracion():
     """,
     (
         request.form.get("nombre_empresa"),
+        request.form.get("slogan"),
         request.form.get("telefono"),
         request.form.get("direccion"),
         request.form.get("google_maps_url"),

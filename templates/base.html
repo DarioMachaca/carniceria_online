@@ -53,20 +53,30 @@
         <div class="logo-container">
 
             {% if config and config.logo %}
-
             <img
                 src="/uploads/logo/{{ config.logo }}"
                 alt="{{ config.nombre_empresa }}"
                 class="logo-img"
             >
-
             {% endif %}
 
-            <h1 class="logo">
+            <div class="empresa-info">
+
+                <h1 class="logo">
 
                     {{ config.nombre_empresa }}
 
-            </h1>
+                </h1>
+
+                {% if config.slogan %}
+                <p class="empresa-slogan">
+
+                    {{ config.slogan }}
+
+                </p>
+                {% endif %}
+
+            </div>
 
         </div>
 
