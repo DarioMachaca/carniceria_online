@@ -82,6 +82,24 @@ Configuración
         placeholder="https://maps.app.goo.gl/..."
     >
 
+    <label>Facebook (nombre visible)</label>
+
+    <input
+        type="text"
+        name="facebook_nombre"
+        value="{{ config.facebook_nombre or '' }}"
+        placeholder="@fricaronline"
+    >
+
+    <label>Facebook (enlace)</label>
+
+    <input
+        type="text"
+        name="facebook_url"
+        value="{{ config.facebook_url or '' }}"
+        placeholder="https://www.facebook.com/fricaronline"
+    >
+
     <label>WhatsApp</label>
 
     <input

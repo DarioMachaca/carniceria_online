@@ -76,6 +76,20 @@
                 </p>
                 {% endif %}
 
+                {% if config.facebook_nombre and config.facebook_url %}
+
+                <a
+                    href="{{ config.facebook_url }}"
+                    target="_blank"
+                    class="facebook-header"
+                >
+
+                    📘 {{ config.facebook_nombre }}
+
+                </a>
+
+                {% endif %}
+
             </div>
 
         </div>
@@ -205,6 +219,26 @@
                     ✉ {{ config.email }}
 
                 </p>
+
+                {% if config.facebook_nombre and config.facebook_url %}
+
+                <p>
+
+                    📘
+
+                    <a
+                        href="{{ config.facebook_url }}"
+                        target="_blank"
+                        class="facebook-footer"
+                    >
+
+                        {{ config.facebook_nombre }}
+
+                    </a>
+
+                </p>
+
+                {% endif %}
 
             </div>
 

@@ -2643,3 +2643,43 @@ body {
 
     gap: 20px;
 }
+
+/* ==========================
+   LOGO Y ENLACE FACEBOOK
+========================== */
+
+.facebook-header{
+
+    color:#F2F2F2;
+
+    text-decoration:none;
+
+    font-size:.9rem;
+
+    display:block;
+
+    margin-top:15px;
+
+    align-self:flex-end;
+
+}
+
+.facebook-header:hover{
+
+    text-decoration:underline;
+
+}
+
+.facebook-footer{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+.facebook-footer:hover{
+
+    text-decoration:underline;
+
+}
