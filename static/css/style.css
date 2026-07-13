@@ -532,6 +532,18 @@ body {
     margin-bottom: 15px;
 }
 
+.hero h3 {
+
+    font-size: 1.6rem;
+
+    font-weight: 500;
+
+    margin-bottom: 20px;
+
+    color: #F2F2F2;
+
+}
+
 .hero p {
 
     font-size: 1.2rem;
@@ -539,6 +551,46 @@ body {
     margin-bottom: 25px;
 
     opacity: .9;
+}
+
+/* ==========================
+   BENEFICIOS HERO
+========================== */
+
+.hero-beneficios {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 40px;
+
+    flex-wrap: wrap;
+
+    padding: 25px 20px;
+
+    background: white;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+.beneficio {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    color: var(--oscuro);
+
 }
 
 .page-header {
