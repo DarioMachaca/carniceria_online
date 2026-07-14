@@ -71,3 +71,10 @@ def contacto():
     return render_template(
         "contacto.html"
     )
+
+@home_bp.route("/nosotros")
+def nosotros():
+
+    return render_template(
+        "nosotros.html"
+    )

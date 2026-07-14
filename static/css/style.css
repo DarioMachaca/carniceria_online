@@ -2801,3 +2801,187 @@ body {
     text-decoration:underline;
 
 }
+
+/* ==========================
+   NOSOTROS
+========================== */
+
+.nosotros-container {
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 30px 20px;
+
+}
+
+.nosotros-item {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:40px;
+
+    margin-bottom:60px;
+
+}
+
+.nosotros-item img {
+
+    width:45%;
+
+    border-radius:15px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+
+}
+
+.nosotros-texto {
+
+    flex:1;
+
+}
+
+.nosotros-texto h3 {
+
+    font-size:1.8rem;
+
+    margin-bottom:15px;
+
+    color:var(--oscuro);
+
+}
+
+.nosotros-texto p {
+
+    font-size:1.1rem;
+
+    line-height:1.7;
+
+    color:#555;
+
+}
+
+.invertido {
+
+    flex-direction:row-reverse;
+
+}
+
+@media (max-width:768px){
+
+    .nosotros-item,
+    .reverse{
+
+        flex-direction:column;
+
+    }
+
+    .nosotros-item img{
+
+        width:100%;
+
+    }
+
+}
+
+/* ==========================
+   CONFIANZA NOSOTROS
+========================== */
+
+.confianza-nosotros {
+
+    margin-top:80px;
+
+    padding:50px 20px;
+
+    background:#f5f5f5;
+
+    text-align:center;
+
+    border-radius:15px;
+
+}
+
+
+.confianza-nosotros h2 {
+
+    font-size:2rem;
+
+    margin-bottom:40px;
+
+    color:var(--oscuro);
+
+}
+
+
+.confianza-grid {
+
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:30px;
+
+}
+
+
+.confianza-item {
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.10);
+
+}
+
+
+.confianza-icono {
+
+    font-size:2.5rem;
+
+    margin-bottom:15px;
+
+}
+
+
+.confianza-item h3 {
+
+    font-size:1.1rem;
+
+    margin-bottom:10px;
+
+    color:var(--oscuro);
+
+}
+
+
+.confianza-item p {
+
+    color:#666;
+
+    line-height:1.5;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .confianza-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+}
