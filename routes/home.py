@@ -75,6 +75,25 @@ def contacto():
 @home_bp.route("/nosotros")
 def nosotros():
 
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute("""
+        SELECT *
+        FROM nosotros
+        WHERE activo = 1
+        ORDER BY orden_visual
+    """)
+
+    nosotros = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
     return render_template(
-        "nosotros.html"
+        "nosotros.html",
+        nosotros=nosotros
     )

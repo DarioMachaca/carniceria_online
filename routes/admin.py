@@ -1954,3 +1954,124 @@ def admin_promociones():
     return render_template(
         "admin_promociones.html"
     )
+
+#================================
+# CONFIGURAR PAGINA NOSOTROS
+#================================
+
+@admin_bp.route("/admin/nosotros")
+@solo_admin
+def admin_nosotros():
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute("""
+        SELECT *
+        FROM nosotros
+        ORDER BY orden_visual
+    """)
+
+    nosotros = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    return render_template(
+        "admin_nosotros.html",
+        nosotros=nosotros
+    )
+
+@admin_bp.route(
+    "/admin/nosotros/guardar",
+    methods=["POST"]
+)
+@solo_admin
+def guardar_nosotros():
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    id_nosotros = request.form.get(
+        "id_nosotros"
+    )
+
+    cursor.execute("""
+        SELECT imagen
+        FROM nosotros
+        WHERE id_nosotros = %s
+    """,
+    (
+        id_nosotros,
+    ))
+
+    item = cursor.fetchone()
+
+    imagen_nombre = item["imagen"]
+
+    archivo = request.files.get(
+        "imagen"
+    )
+
+    if archivo and archivo.filename:
+
+        imagen_nombre = secure_filename(
+            archivo.filename
+        )
+
+        ruta_imagen = os.path.join(
+            "uploads",
+            "nosotros",
+            imagen_nombre
+        )
+
+        os.makedirs(
+            os.path.dirname(
+                ruta_imagen
+            ),
+            exist_ok=True
+        )
+
+        archivo.save(
+            ruta_imagen
+        )
+
+    cursor.execute("""
+        UPDATE nosotros
+        SET
+            titulo = %s,
+            descripcion = %s,
+            imagen = %s,
+            orden_visual = %s,
+            activo = %s
+        WHERE id_nosotros = %s
+    """,
+    (
+        request.form.get(
+            "titulo"
+        ),
+        request.form.get(
+            "descripcion"
+        ),
+        imagen_nombre,
+        request.form.get(
+            "orden_visual"
+        ),
+        request.form.get("activo"),
+        id_nosotros
+    ))
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(
+        "/admin/nosotros"
+    )

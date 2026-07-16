@@ -2985,3 +2985,245 @@ body {
     }
 
 }
+
+/* ======================================
+   ADMIN NOSOTROS
+====================================== */
+
+.admin-header {
+
+    margin-bottom: 25px;
+
+}
+
+.admin-header h2 {
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    color: var(--blanco);
+
+}
+
+
+/* BOTONES ADMIN */
+
+.admin-actions {
+
+    margin-bottom: 25px;
+
+}
+
+.btn-admin {
+
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    background: var(--rojo);
+
+    color: var(--blanco);
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+.btn-admin:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(.9);
+
+}
+
+
+/* TARJETAS DE CADA BLOQUE */
+
+.admin-card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    margin-bottom: 30px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.08);
+
+}
+
+
+/* LABELS */
+
+.admin-card label {
+
+    display: block;
+
+    margin-top: 15px;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+
+    color: var(--oscuro);
+
+}
+
+
+/* INPUTS */
+
+.admin-card input[type="text"],
+.admin-card input[type="number"],
+.admin-card textarea,
+.admin-card select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: 1px solid rgba(13,34,38,.15);
+
+    font-size: 15px;
+
+    box-sizing: border-box;
+
+    transition: .3s;
+
+}
+
+.admin-card textarea {
+
+    resize: vertical;
+
+    min-height: 120px;
+
+}
+
+.admin-card input:focus,
+.admin-card textarea:focus,
+.admin-card select:focus {
+
+    outline: none;
+
+    border-color: var(--rojo);
+
+    box-shadow:
+        0 0 5px rgba(242,48,65,.35);
+
+}
+
+
+/* SELECT ESTADO */
+
+.admin-card select {
+
+    background: var(--blanco);
+
+    cursor: pointer;
+
+}
+
+
+/* IMAGEN ACTUAL */
+
+.imagen-actual {
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    background: rgba(13,34,38,.04);
+
+    border-radius: 10px;
+
+}
+
+.imagen-actual p {
+
+    margin-top: 0;
+
+}
+
+.imagen-actual img {
+
+    width: 250px;
+
+    max-width: 100%;
+
+    border-radius: 12px;
+
+    display: block;
+
+}
+
+
+/* INPUT ARCHIVO */
+
+.admin-card input[type="file"] {
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    background: var(--blanco);
+
+    border-radius: 8px;
+
+    width: 100%;
+
+}
+
+
+/* BOTON GUARDAR */
+
+.admin-card button {
+
+    margin-top: 25px;
+
+    width: 100%;
+
+    padding: 14px;
+
+    font-size: 16px;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .admin-card {
+
+        padding: 20px;
+
+    }
+
+    .admin-header h2 {
+
+        font-size: 22px;
+
+    }
+
+    .imagen-actual img {
+
+        width: 100%;
+
+    }
+
+}

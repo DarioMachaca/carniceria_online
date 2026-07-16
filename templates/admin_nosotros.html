@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+Nosotros
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+
+        👥 Configuración Nosotros
+
+    </h2>
+
+</section>
+
+<div class="admin-actions">
+
+    <a
+        href="/admin/configuracion"
+        class="btn-admin"
+    >
+
+        ← Volver
+
+    </a>
+
+</div>
+
+{% for item in nosotros %}
+
+<form
+    method="POST"
+    action="/admin/nosotros/guardar"
+    enctype="multipart/form-data"
+    class="admin-card"
+>
+
+    <input
+        type="hidden"
+        name="id_nosotros"
+        value="{{ item.id_nosotros }}"
+    >
+
+    <label>Título</label>
+
+    <input
+        type="text"
+        name="titulo"
+        value="{{ item.titulo }}"
+        required
+    >
+
+    <label>Descripción</label>
+
+    <textarea
+        name="descripcion"
+        rows="5"
+    >{{ item.descripcion }}</textarea>
+
+    <label>Orden visual</label>
+
+    <input
+        type="number"
+        name="orden_visual"
+        value="{{ item.orden_visual }}"
+    >
+
+    <label>Estado</label>
+
+    <select name="activo">
+
+        <option
+            value="1"
+            {% if item.activo == 1 %}
+            selected
+            {% endif %}
+        >
+            Activo
+        </option>
+
+        <option
+            value="0"
+            {% if item.activo == 0 %}
+            selected
+            {% endif %}
+        >
+            Inactivo
+        </option>
+
+    </select>
+
+    {% if item.imagen %}
+
+    <div class="imagen-actual">
+
+        <p>
+
+            <strong>Imagen actual:</strong>
+
+        </p>
+
+        <img
+            src="/uploads/nosotros/{{ item.imagen }}"
+            style="
+                width:250px;
+                border-radius:10px;
+            "
+        >
+    {% endif %}
+
+    </div>
+
+    <label>Cambiar imagen</label>
+
+    <input
+        type="file"
+        name="imagen"
+        accept="image/*"
+    >
+
+    <button
+        type="submit"
+        class="btn-admin"
+    >
+
+        💾 Guardar bloque
+
+    </button>
+
+</form>
+
+{% endfor %}
+
+{% endblock %}

@@ -25,107 +25,34 @@ Nosotros
 
 <section class="nosotros-container">
 
-    <!-- BLOQUE 1 -->
+    {% for item in nosotros %}
 
-    <div class="nosotros-item">
+    <div class="nosotros-item
+        {% if loop.index % 2 == 0 %}
+            invertido
+        {% endif %}
+    ">
 
         <img
-            src="/uploads/nosotros/carniceria.jpg"
-            alt="Nuestro local"
+            src="/uploads/nosotros/{{ item.imagen }}"
+            alt="{{ item.titulo }}"
         >
 
         <div class="nosotros-texto">
 
             <h3>
-                Nuestro local
+                {{ item.titulo }}
             </h3>
 
             <p>
-
-                Contamos con un local físico donde
-                seleccionamos diariamente los mejores
-                productos para nuestros clientes.
-
+                {{ item.descripcion }}
             </p>
 
         </div>
 
     </div>
 
-    <!-- BLOQUE 2 -->
-
-    <div class="nosotros-item invertido">
-
-        <img
-            src="/uploads/nosotros/calidad_carnes.jpg"
-            alt="Calidad"
-        >
-
-        <div class="nosotros-texto">
-
-            <h3>
-                Carnes seleccionadas
-            </h3>
-
-            <p>
-                Trabajamos con carnes frescas y cortes
-                cuidadosamente seleccionados para
-                garantizar la mejor calidad.
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- BLOQUE 3 -->
-
-    <div class="nosotros-item">
-
-        <img
-            src="/uploads/nosotros/entrega_carnes.jpg"
-            alt="Entrega"
-        >
-
-        <div class="nosotros-texto">
-
-            <h3>
-                Entrega a domicilio
-            </h3>
-
-            <p>
-
-                Preparamos cada pedido con cuidado
-                para que llegue en perfectas condiciones.
-
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- BLOQUE 4 -->
-
-    <div class="nosotros-item invertido">
-
-        <img
-            src="/uploads/nosotros/pickpoint.jpg"
-            alt="Retiro"
-        >
-
-        <div class="nosotros-texto">
-
-            <h3>
-                Puntos de retiro
-            </h3>
-
-            <p>
-                También podés retirar tu pedido
-                en nuestros puntos habilitados.
-            </p>
-
-        </div>
-
-    </div>
+    {% endfor %}
 
 </section>
 
