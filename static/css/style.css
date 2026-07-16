@@ -730,7 +730,7 @@ body {
 
     gap: 20px;
 
-    padding: 20px;
+    padding: 20px 15px;
 }
 
 /* ==========================
@@ -1003,6 +1003,18 @@ body {
     font-size:2rem;
 
     cursor:pointer;
+
+}
+
+@media(max-width:768px){
+
+    .grid-productos {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+
+    }
 
 }
 

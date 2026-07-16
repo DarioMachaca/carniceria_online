@@ -1247,15 +1247,16 @@ def guardar_promocion():
             orden_visualizacion,
             fecha_creacion
         )
-        VALUES (%s,%s,%s,%s,%s,%s,%s,NOW())
-    """, (
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,NOW())
+    """,
+    (
         request.form.get("titulo"),
         imagen_nombre,
         request.form.get("descripcion"),
         request.form.get("fecha_inicio") or None,
         request.form.get("fecha_fin") or None,
-        request.form.get("activo"),
         request.form.get("tipo_temporizador"),
+        request.form.get("activo"),
         request.form.get("orden_visualizacion")
     ))
 
