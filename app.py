@@ -1,6 +1,9 @@
 from flask import Flask
 from flask import session
 from flask import send_from_directory
+from dotenv import load_dotenv
+import os
+
 
 
 from routes.home import home_bp
@@ -12,6 +15,8 @@ from routes.admin import admin_bp
 from models.display import obtener_display
 from models.configuracion import obtener_configuracion
 
+load_dotenv()
+
 app = Flask(__name__)
 
 @app.route('/uploads/<path:filename>')
@@ -22,7 +27,10 @@ def uploaded_file(filename):
         filename
     )
 
-app.secret_key = "carrito_sistema_2026"
+app.secret_key = os.getenv(
+    "SECRET_KEY"
+)
+
 
 @app.context_processor
 def variables_globales():

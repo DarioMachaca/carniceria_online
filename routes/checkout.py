@@ -6,6 +6,10 @@ from flask import redirect
 from datetime import datetime
 from urllib.parse import quote
 
+from services.mercadopago_service import (
+    crear_preferencia
+)
+
 from db import get_connection
 
 checkout_bp = Blueprint(
@@ -406,6 +410,8 @@ def guardar_pedido():
 
     productos_comprobante = []
 
+    productos_mp = []
+
     for id_producto, cantidad in carrito.items():
 
         cursor.execute(
@@ -429,6 +435,18 @@ def guardar_pedido():
             precio_unitario
             * float(cantidad)
         )
+
+        productos_mp.append({
+
+            "nombre":
+                f"{producto['nombre']} ({cantidad} kg)",
+
+            "cantidad":
+                1,
+
+            "precio_unitario":
+                subtotal_producto
+        })
 
         productos_comprobante.append({
 
@@ -492,6 +510,9 @@ def guardar_pedido():
         )
     )
 
+    id_pago = cursor.lastrowid
+
+
     cursor.execute(
         """
         UPDATE control_pedidos
@@ -501,7 +522,43 @@ def guardar_pedido():
         (nuevo_numero,)
     )
 
+    if (
+        checkout["medio_pago"]
+        == "mercadopago"
+    ):
+
+        preferencia = crear_preferencia(
+            codigo_compra,
+            productos_mp,
+            checkout["envio"]
+        )
+
+        if "id" not in preferencia:
+
+            return str(preferencia)
+
+        cursor.execute(
+            """
+            UPDATE pagos
+            SET mp_preference_id = %s
+            WHERE id_pago = %s
+            """,
+            (
+                preferencia["id"],
+                id_pago
+            )
+        )
+
     conexion.commit()
+
+    if (
+        checkout["medio_pago"]
+        == "mercadopago"
+    ):
+
+        return redirect(
+            preferencia["init_point"]
+        )
 
     cursor.close()
     conexion.close()
@@ -569,6 +626,22 @@ def guardar_pedido():
     return redirect(
         "/comprobante"
     )
+
+@checkout_bp.route("/pago-exitoso")
+def pago_exitoso():
+
+    return "Pago aprobado"
+
+@checkout_bp.route("/pago-pendiente")
+def pago_pendiente():
+
+    return "Pago pendiente"
+
+@checkout_bp.route("/pago-fallido")
+def pago_fallido():
+
+    return "Pago rechazado"
+
 
 @checkout_bp.route(
     "/comprobante"
