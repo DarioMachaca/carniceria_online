@@ -630,15 +630,26 @@ def guardar_pedido():
 @checkout_bp.route("/pago-exitoso")
 def pago_exitoso():
 
+    print("SUCCESS:")
+    print(request.args)
+
     return "Pago aprobado"
+
 
 @checkout_bp.route("/pago-pendiente")
 def pago_pendiente():
 
+    print("PENDING:")
+    print(request.args)
+
     return "Pago pendiente"
+
 
 @checkout_bp.route("/pago-fallido")
 def pago_fallido():
+
+    print("FAILURE:")
+    print(request.args)
 
     return "Pago rechazado"
 
