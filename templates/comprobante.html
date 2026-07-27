@@ -17,6 +17,14 @@ Pedido confirmado
         <div class="comprobante-header">
 
             <p><strong>Código:</strong> {{ datos.codigo_compra }}</p>
+
+            {% if datos.referencia_pago %}
+                <p>
+                    <strong>N° Operación:</strong>
+                    {{ datos.referencia_pago }}
+                </p>
+            {% endif %}
+            
             <p><strong>Fecha:</strong> {{ datos.fecha }}</p>
             <p><strong>Estado:</strong> {{ datos.estado_pedido }}</p>
 

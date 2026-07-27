@@ -703,6 +703,9 @@ def pago_exitoso():
         "codigo_compra":
             pedido["codigo_compra"],
 
+        "referencia_pago":
+            payment_id,
+
         "fecha":
             pedido["fecha"].strftime(
                 "%d/%m/%Y %H:%M"
@@ -747,6 +750,16 @@ def pago_exitoso():
 
     cursor.close()
     conexion.close()
+
+    session.pop(
+        "carrito",
+        None
+    )
+
+    session.pop(
+        "checkout",
+        None
+    )
 
     return redirect(
         "/comprobante"
