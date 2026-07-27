@@ -671,6 +671,80 @@ def pago_exitoso():
 
     conexion.commit()
 
+    cursor.execute(
+        """
+        SELECT *
+        FROM pedidos
+        WHERE codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    pedido = cursor.fetchone()
+
+    cursor.execute(
+        """
+        SELECT
+            pr.nombre,
+            pd.cantidad,
+            pd.subtotal
+        FROM pedido_detalle pd
+        INNER JOIN productos pr
+            ON pd.id_producto = pr.id_producto
+        WHERE pd.id_pedido = %s
+        """,
+        (pedido["id_pedido"],)
+    )
+
+    productos = cursor.fetchall()
+
+    session["comprobante"] = {
+
+        "codigo_compra":
+            pedido["codigo_compra"],
+
+        "fecha":
+            pedido["fecha"].strftime(
+                "%d/%m/%Y %H:%M"
+            ),
+
+        "cliente_nombre":
+            pedido["cliente_nombre"],
+
+        "cliente_telefono":
+            pedido["cliente_telefono"],
+
+        "tipo_entrega":
+            pedido["tipo_entrega"],
+
+        "direccion":
+            pedido["direccion"],
+
+        "zona_nombre":
+            "",
+
+        "medio_pago":
+            "mercadopago",
+
+        "estado_pedido":
+            pedido["estado_pedido"],
+
+        "observaciones":
+            pedido["observaciones"],
+
+        "subtotal":
+            float(pedido["subtotal"]),
+
+        "envio":
+            float(pedido["envio"]),
+
+        "total":
+            float(pedido["total"]),
+
+        "productos":
+            productos
+    }
+
     cursor.close()
     conexion.close()
 
