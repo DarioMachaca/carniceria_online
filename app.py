@@ -4,8 +4,6 @@ from flask import send_from_directory
 from dotenv import load_dotenv
 import os
 
-
-
 from routes.home import home_bp
 from routes.categorias import categorias_bp
 from routes.productos import productos_bp

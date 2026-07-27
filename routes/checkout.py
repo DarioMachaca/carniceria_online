@@ -630,28 +630,103 @@ def guardar_pedido():
 @checkout_bp.route("/pago-exitoso")
 def pago_exitoso():
 
-    print("SUCCESS:")
-    print(request.args)
+    payment_id = request.args.get(
+        "payment_id"
+    )
 
-    return "Pago aprobado"
+    external_reference = request.args.get(
+        "external_reference"
+    )
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute(
+        """
+        UPDATE pedidos
+        SET estado_pago = 'aprobado'
+        WHERE codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    cursor.execute(
+        """
+        UPDATE pagos p
+        INNER JOIN pedidos pe
+            ON p.id_pedido = pe.id_pedido
+        SET
+            p.estado = 'aprobado',
+            p.referencia_pago = %s
+        WHERE pe.codigo_compra = %s
+        """,
+        (
+            payment_id,
+            external_reference
+        )
+    )
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(
+        "/comprobante"
+    )
 
 
 @checkout_bp.route("/pago-pendiente")
 def pago_pendiente():
 
-    print("PENDING:")
-    print(request.args)
-
-    return "Pago pendiente"
+    return redirect(
+        "/comprobante"
+    )
+    
 
 
 @checkout_bp.route("/pago-fallido")
 def pago_fallido():
 
-    print("FAILURE:")
-    print(request.args)
+    external_reference = request.args.get(
+        "external_reference"
+    )
 
-    return "Pago rechazado"
+    conexion = get_connection()
+
+    cursor = conexion.cursor()
+
+    cursor.execute(
+        """
+        UPDATE pedidos
+        SET estado_pago = 'rechazado'
+        WHERE codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    cursor.execute(
+        """
+        UPDATE pagos p
+        INNER JOIN pedidos pe
+            ON p.id_pedido = pe.id_pedido
+        SET p.estado = 'rechazado'
+        WHERE pe.codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(
+        "/comprobante"
+    )
 
 
 @checkout_bp.route(
