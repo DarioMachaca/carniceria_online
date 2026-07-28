@@ -627,49 +627,16 @@ def guardar_pedido():
         "/comprobante"
     )
 
-@checkout_bp.route("/pago-exitoso")
-def pago_exitoso():
-
-    payment_id = request.args.get(
-        "payment_id"
-    )
-
-    external_reference = request.args.get(
-        "external_reference"
-    )
+def reconstruir_comprobante(
+    external_reference,
+    payment_id=None
+):
 
     conexion = get_connection()
 
     cursor = conexion.cursor(
         dictionary=True
     )
-
-    cursor.execute(
-        """
-        UPDATE pedidos
-        SET estado_pago = 'aprobado'
-        WHERE codigo_compra = %s
-        """,
-        (external_reference,)
-    )
-
-    cursor.execute(
-        """
-        UPDATE pagos p
-        INNER JOIN pedidos pe
-            ON p.id_pedido = pe.id_pedido
-        SET
-            p.estado = 'aprobado',
-            p.referencia_pago = %s
-        WHERE pe.codigo_compra = %s
-        """,
-        (
-            payment_id,
-            external_reference
-        )
-    )
-
-    conexion.commit()
 
     cursor.execute(
         """
@@ -732,6 +699,9 @@ def pago_exitoso():
         "estado_pedido":
             pedido["estado_pedido"],
 
+        "estado_pago":
+            pedido["estado_pago"],
+
         "observaciones":
             pedido["observaciones"],
 
@@ -761,6 +731,58 @@ def pago_exitoso():
         None
     )
 
+@checkout_bp.route("/pago-exitoso")
+def pago_exitoso():
+
+    payment_id = request.args.get(
+        "payment_id"
+    )
+
+    external_reference = request.args.get(
+        "external_reference"
+    )
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute(
+        """
+        UPDATE pedidos
+        SET estado_pago = 'aprobado'
+        WHERE codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    cursor.execute(
+        """
+        UPDATE pagos p
+        INNER JOIN pedidos pe
+            ON p.id_pedido = pe.id_pedido
+        SET
+            p.estado = 'aprobado',
+            p.referencia_pago = %s
+        WHERE pe.codigo_compra = %s
+        """,
+        (
+            payment_id,
+            external_reference
+        )
+    )
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    reconstruir_comprobante(
+        external_reference,
+        payment_id
+    )
+
     return redirect(
         "/comprobante"
     )
@@ -768,6 +790,43 @@ def pago_exitoso():
 
 @checkout_bp.route("/pago-pendiente")
 def pago_pendiente():
+
+    external_reference = request.args.get(
+        "external_reference"
+    )
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor()
+
+    cursor.execute(
+        """
+        UPDATE pedidos
+        SET estado_pago = 'pendiente'
+        WHERE codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    cursor.execute(
+        """
+        UPDATE pagos p
+        INNER JOIN pedidos pe
+            ON p.id_pedido = pe.id_pedido
+        SET p.estado = 'pendiente'
+        WHERE pe.codigo_compra = %s
+        """,
+        (external_reference,)
+    )
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    reconstruir_comprobante(
+        external_reference
+    )
 
     return redirect(
         "/comprobante"
@@ -810,6 +869,10 @@ def pago_fallido():
 
     cursor.close()
     conexion.close()
+
+    reconstruir_comprobante(
+        external_reference
+    )
 
     return redirect(
         "/comprobante"
