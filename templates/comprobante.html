@@ -14,6 +14,37 @@ Pedido confirmado
             ✅ Pedido confirmado
         </h2>
 
+        {% if datos.estado_pago == "aprobado" %}
+
+            <div class="alerta-pago alerta-aprobado">
+
+                ✅ <strong>Pago aprobado.</strong>
+                Tu compra fue registrada correctamente.
+
+            </div>
+
+        {% elif datos.estado_pago == "rechazado" %}
+
+            <div class="alerta-pago alerta-rechazado">
+
+                ❌ <strong>Pago rechazado.</strong>
+                Tu pedido quedó registrado, pero el pago no pudo realizarse.
+                Podés intentarlo nuevamente con otro medio de pago.
+
+            </div>
+
+        {% elif datos.estado_pago == "pendiente" %}
+
+            <div class="alerta-pago alerta-pendiente">
+
+                ⏳ <strong>Pago pendiente.</strong>
+                Estamos procesando el pago.
+                Te informaremos cuando sea confirmado.
+
+            </div>
+
+        {% endif %}
+
         <div class="comprobante-header">
 
             <p><strong>Código:</strong> {{ datos.codigo_compra }}</p>
@@ -26,7 +57,15 @@ Pedido confirmado
             {% endif %}
             
             <p><strong>Fecha:</strong> {{ datos.fecha }}</p>
-            <p><strong>Estado:</strong> {{ datos.estado_pedido }}</p>
+            <p>
+                <strong>Estado del pago:</strong>
+                {{ datos.estado_pago }}
+            </p>
+
+            <p>
+                <strong>Estado del pedido:</strong>
+                {{ datos.estado_pedido }}
+            </p>
 
         </div>
 
