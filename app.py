@@ -12,6 +12,9 @@ from routes.checkout import checkout_bp
 from routes.admin import admin_bp
 from models.display import obtener_display
 from models.configuracion import obtener_configuracion
+from routes.admin_whatsapp import (
+    admin_whatsapp_bp
+)
 
 load_dotenv()
 
@@ -72,6 +75,10 @@ app.register_blueprint(
 
 app.register_blueprint(
     admin_bp
+)
+
+app.register_blueprint(
+    admin_whatsapp_bp
 )
 
 if __name__ == "__main__":

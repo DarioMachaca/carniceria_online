@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}
+Venta WhatsApp
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        📱 Venta WhatsApp
+    </h2>
+
+</section>
+
+<section class="admin-card">
+
+        <input
+            type="text"
+            id="buscar-producto"
+            name="buscar"
+            value="{{ buscar }}"
+            placeholder="Buscar producto..."
+        >
+
+        <div id="sugerencias-productos"></div>
+
+</section>
+
+
+<section class="admin-card">
+
+    <div id="pedido-actual">
+
+        <h3>Pedido actual</h3>
+
+        {% for producto in carrito %}
+
+        <div class="carrito-item">
+
+            <div class="carrito-info">
+
+                <div class="carrito-nombre">
+                    {{ producto.nombre }}
+                </div>
+
+                <div class="carrito-subtotal">
+                    Subtotal:
+                    <strong>
+                        $ {{ producto.subtotal }}
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="carrito-controles">
+
+                <button
+                    type="button"
+                    class="btn-cantidad btn-whatsapp-quitar"
+                    data-id="{{ producto.id_producto }}"
+                >
+                    -
+                </button>
+
+                <span class="cantidad-num">
+
+                    {{ producto.cantidad }}
+
+                    {% if producto.unidad_medida == "kg" %}
+                        kg
+                    {% else %}
+                        un
+                    {% endif %}
+
+                </span>
+
+                <button
+                    type="button"
+                    class="btn-cantidad btn-whatsapp-agregar"
+                    data-id="{{ producto.id_producto }}"
+                >
+                    +
+                </button>
+
+            </div>
+
+            <div class="carrito-eliminar">
+
+                <button
+                    type="button"
+                    class="btn-whatsapp-eliminar"
+                    data-id="{{ producto.id_producto }}"
+                >
+                    🗑 Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="carrito-total">
+
+            <h3>
+                Total: $ {{ total_general }}
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="admin-card">
+
+    <h3>
+        👤 Datos del cliente
+    </h3>
+
+    <form
+        action="/admin/whatsapp/generar-pedido"
+        method="POST"
+    >
+
+        <label>
+
+            Nombre
+
+        </label>
+
+        <input
+            type="text"
+            name="cliente_nombre"
+            required
+        >
+
+        <label>
+
+            Teléfono
+
+        </label>
+
+        <input
+            type="text"
+            name="cliente_telefono"
+            required
+        >
+
+        <br><br>
+
+        <label>
+
+            Tipo de entrega
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="radio"
+                name="tipo_entrega"
+                value="retiro"
+                checked
+            >
+
+            Retira en el local
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="radio"
+                name="tipo_entrega"
+                value="domicilio"
+            >
+
+            Envío a domicilio
+
+        </label>
+
+        <br><br>
+
+        <label>
+
+            Dirección
+
+        </label>
+
+        <textarea
+            name="direccion"
+            rows="3"
+        ></textarea>
+
+        <label>
+
+            Observaciones
+
+        </label>
+
+        <textarea
+            name="observaciones"
+            rows="3"
+        ></textarea>
+
+        <label>
+
+            Costo de envío
+
+        </label>
+
+        <input
+            type="number"
+            name="envio"
+            placeholder="Costo de envío"
+        >
+
+        <br><br>
+
+        <label>
+
+            Medio de pago
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="mercadopago"
+                checked
+            >
+
+            Mercado Pago
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="transferencia"
+            >
+
+            Transferencia
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="radio"
+                name="medio_pago"
+                value="efectivo"
+            >
+
+            Efectivo al retirar
+
+        </label>
+
+        <br><br>
+
+        <button
+            type="submit"
+            class="btn-principal"
+        >
+
+            📲 Generar Pedido
+
+        </button>
+
+    </form>
+
+</section>
+
+
+{% endblock %}
