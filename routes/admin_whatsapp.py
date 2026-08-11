@@ -431,9 +431,8 @@ def generar_pedido_whatsapp():
 
     envio = float(
         request.form.get(
-            "envio",
-            0
-        )
+            "envio"
+        ) or 0
     )
 
     conexion = get_connection()
