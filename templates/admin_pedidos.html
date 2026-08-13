@@ -118,6 +118,7 @@ Pedidos
                 <th>Cliente</th>
                 <th>Total</th>
                 <th>Pago</th>
+                <th>Medio Pago</th>
                 <th>Estado</th>
                 <th>Acción</th>
 
@@ -149,6 +150,18 @@ Pedidos
 
                 <td>
                     {{ pedido.estado_pago }}
+                </td>
+
+                <td>
+                    {% if pedido.medio_pago == "mercadopago" %}
+                        💳 Mercado Pago
+                    {% elif pedido.medio_pago == "transferencia" %}
+                        🏦 Transferencia
+                    {% elif pedido.medio_pago == "efectivo" %}
+                        💵 Efectivo
+                    {% else %}
+                        -
+                    {% endif %}
                 </td>
 
                 <td>

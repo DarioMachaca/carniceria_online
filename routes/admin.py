@@ -122,14 +122,17 @@ def pedidos():
 
     sql = """
         SELECT
-            id_pedido,
-            codigo_compra,
-            fecha,
-            cliente_nombre,
-            total,
-            estado_pago,
-            estado_pedido
-        FROM pedidos
+            p.id_pedido,
+            p.codigo_compra,
+            p.fecha,
+            p.cliente_nombre,
+            p.total,
+            p.estado_pago,
+            p.estado_pedido,
+            pa.medio_pago
+        FROM pedidos p
+        LEFT JOIN pagos pa
+            ON p.id_pedido = pa.id_pedido
         WHERE 1=1
     """
 
