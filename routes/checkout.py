@@ -623,6 +623,15 @@ def guardar_pedido():
         None
     )
 
+    if (
+        checkout["medio_pago"]
+        == "transferencia"
+    ):
+
+        return redirect(
+            "/transferencia"
+        )
+
     return redirect(
         "/comprobante"
     )
@@ -958,6 +967,83 @@ Medio de pago:
     return render_template(
         "comprobante.html",
         datos=datos,
+        mensaje_whatsapp=mensaje_whatsapp,
+        telefono=telefono
+    )
+
+@checkout_bp.route(
+    "/transferencia"
+)
+def transferencia():
+
+    datos = session.get(
+        "comprobante"
+    )
+
+    if not datos:
+
+        return redirect(
+            "/"
+        )
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute("""
+        SELECT *
+        FROM datos_bancarios
+        WHERE activo = 1
+        LIMIT 1
+    """)
+
+    datos_bancarios = cursor.fetchone()
+
+    cursor.execute("""
+        SELECT telefono
+        FROM configuracion
+        LIMIT 1
+    """)
+
+    configuracion = cursor.fetchone()
+
+    telefono = ""
+
+    if configuracion:
+
+        telefono = configuracion["telefono"]
+
+    telefono = (
+        telefono
+        .replace(" ", "")
+        .replace("-", "")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("+", "")
+    )
+
+    mensaje = f"""
+    Hola.
+
+    Soy {datos['cliente_nombre']}.
+
+    Realicé una transferencia correspondiente al pedido {datos['codigo_compra']} por un total de ${datos['total']}.
+
+    Adjunto comprobante."""
+
+    mensaje_whatsapp = quote(
+        mensaje
+    )
+
+    cursor.close()
+    conexion.close()
+
+    return render_template(
+        "transferencia.html",
+        datos=datos,
+        datos_bancarios=datos_bancarios,
         mensaje_whatsapp=mensaje_whatsapp,
         telefono=telefono
     )

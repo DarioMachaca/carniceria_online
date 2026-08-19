@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+Datos Bancarios
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-header">
+
+    <h2>
+        🏦 Datos Bancarios
+    </h2>
+
+</section>
+
+<form method="POST" class="admin-form">
+
+    <label>Nombre de la cuenta</label>
+    <input
+        type="text"
+        name="nombre_cuenta"
+        value="{{ datos.nombre_cuenta if datos else '' }}"
+        required
+    >
+
+    <label>Titular</label>
+    <input
+        type="text"
+        name="titular"
+        value="{{ datos.titular if datos else '' }}"
+        required
+    >
+
+    <label>Banco</label>
+    <input
+        type="text"
+        name="banco"
+        value="{{ datos.banco if datos else '' }}"
+        required
+    >
+
+    <label>Alias</label>
+    <input
+        type="text"
+        name="alias"
+        value="{{ datos.alias if datos else '' }}"
+        required
+    >
+
+    <label>CBU</label>
+    <input
+        type="text"
+        name="cbu"
+        value="{{ datos.cbu if datos else '' }}"
+    >
+
+    <label>CVU</label>
+    <input
+        type="text"
+        name="cvu"
+        value="{{ datos.cvu if datos else '' }}"
+    >
+
+    <button
+        type="submit"
+        class="btn-admin"
+    >
+        💾 Guardar Cambios
+    </button>
+
+</form>
+
+{% endblock %}

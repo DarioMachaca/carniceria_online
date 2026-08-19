@@ -3306,3 +3306,73 @@ body {
     }
 
 }
+
+/* ===================================
+   NOTIFICACION DE TRANSFERENCIA
+====================================== */
+
+.notificacion {
+
+    position: fixed;
+
+    bottom: 30px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: #0D2226;
+
+    color: #F2F2F2;
+
+    padding: 14px 24px;
+
+    border-left: 5px solid #F23041;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: all 0.3s ease;
+
+    z-index: 9999;
+
+}
+
+.notificacion.mostrar {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    bottom: 45px;
+
+}
+
+/* ===================================
+   BOTON DE WHATSAPP TRANFERENCIA
+====================================== */
+
+.btn-transferencia {
+
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    margin-top: 10px;
+
+}

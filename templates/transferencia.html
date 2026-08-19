@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transferencia Bancaria
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <h2>
+        🏦 Transferencia Bancaria
+    </h2>
+
+    <p>
+        Tu pedido fue registrado correctamente.
+    </p>
+
+</section>
+
+<section class="checkout-box">
+
+    <h3>
+        Datos del pedido
+    </h3>
+
+    <p>
+        <strong>Pedido:</strong>
+        {{ datos.codigo_compra }}
+    </p>
+
+    <p>
+        <strong>Total a transferir:</strong>
+        $ {{ datos.total }}
+    </p>
+
+</section>
+
+<section class="checkout-box">
+
+    <div id="notificacion" class="notificacion"></div>
+
+    <h3>
+        Datos Bancarios
+    </h3>
+
+    <p>
+        <strong>Cuenta:</strong>
+        {{ datos_bancarios.nombre_cuenta }}
+    </p>
+
+    <p>
+        <strong>Titular:</strong>
+        {{ datos_bancarios.titular }}
+    </p>
+
+    <p>
+        <strong>Banco:</strong>
+        {{ datos_bancarios.banco }}
+    </p>
+
+    <p>
+        <strong>Alias:</strong>
+        {{ datos_bancarios.alias }}
+    </p>
+
+    <button
+        type="button"
+        class="btn-admin"
+        onclick="copiarAlias()"
+    >
+        📋 Copiar Alias
+    </button>
+
+    <p>
+        <strong>CBU:</strong>
+        {{ datos_bancarios.cbu }}
+    </p>
+
+    <button
+        type="button"
+        class="btn-admin"
+        onclick="copiarCBU()"
+    >
+        📋 Copiar CBU
+    </button>
+
+    <p>
+        <strong>CVU:</strong>
+        {{ datos_bancarios.cvu }}
+    </p>
+
+    <button
+        type="button"
+        class="btn-admin"
+        onclick="copiarCVU()"
+    >
+        📋 Copiar CVU
+    </button>
+
+</section>
+
+<section class="checkout-box">
+
+    <h3>
+        Importante
+    </h3>
+
+    <p>
+        1. Realizá la transferencia por el importe exacto.
+    </p>
+
+    <p>
+        2. Guardá el comprobante.
+    </p>
+
+    <p>
+        3. Enviá el comprobante por WhatsApp para acreditar el pago.
+    </p>
+
+</section>
+
+<section class="checkout-box">
+
+    <h3>
+        Enviar comprobante
+    </h3>
+
+    <p>
+        Una vez realizada la transferencia,
+        enviá el comprobante por WhatsApp para acreditar el pago.
+    </p>
+
+    <a
+        href="https://wa.me/{{ telefono }}?text={{ mensaje_whatsapp }}"
+        target="_blank"
+        class="btn-transferencia"
+    >
+
+        📱 Enviar comprobante por WhatsApp
+
+    </a>
+
+</section>
+
+<script>
+
+function mostrarNotificacion(texto) {
+
+    const notificacion = document.getElementById(
+        "notificacion"
+    );
+
+    notificacion.innerText = texto;
+
+    notificacion.classList.add(
+        "mostrar"
+    );
+
+    setTimeout(() => {
+
+        notificacion.classList.remove(
+            "mostrar"
+        );
+
+    }, 2000);
+
+}
+
+function copiarAlias() {
+
+    navigator.clipboard.writeText(
+        "{{ datos_bancarios.alias }}"
+    );
+
+    mostrarNotificacion(
+        "✓ Alias copiado correctamente"
+    );
+
+}
+
+function copiarCBU() {
+
+    navigator.clipboard.writeText(
+        "{{ datos_bancarios.cbu }}"
+    );
+
+    mostrarNotificacion(
+        "✓ CBU copiado correctamente"
+    );
+
+}
+
+function copiarCVU() {
+
+    navigator.clipboard.writeText(
+        "{{ datos_bancarios.cvu }}"
+    );
+
+    mostrarNotificacion(
+        "✓ CVU copiado correctamente"
+    );
+
+}
+
+</script>
+
+{% endblock %}

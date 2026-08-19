@@ -687,6 +687,15 @@ def generar_pedido_whatsapp():
             )
         )
 
+    cursor.execute("""
+        SELECT *
+        FROM datos_bancarios
+        WHERE activo = 1
+        LIMIT 1
+    """)
+
+    datos_bancarios = cursor.fetchone()
+
     conexion.commit()
 
     cursor.close()
@@ -747,8 +756,11 @@ def generar_pedido_whatsapp():
 
     Datos para transferencia:
 
-    Alias: TU_ALIAS
-    CBU: TU_CBU
+    Cuenta: {datos_bancarios['nombre_cuenta']}
+    Titular: {datos_bancarios['titular']}
+    Banco: {datos_bancarios['banco']}
+    Alias: {datos_bancarios['alias']}
+    CBU: {datos_bancarios['cbu']}
 
     Una vez realizada la transferencia envianos el comprobante.
 

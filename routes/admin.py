@@ -2079,3 +2079,61 @@ def guardar_nosotros():
     return redirect(
         "/admin/nosotros"
     )
+
+@admin_bp.route(
+    "/admin/datos-bancarios",
+    methods=["GET", "POST"]
+)
+@solo_admin
+def datos_bancarios():
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    if request.method == "POST":
+
+        cursor.execute(
+            """
+            UPDATE datos_bancarios
+            SET
+                nombre_cuenta = %s,
+                titular = %s,
+                banco = %s,
+                alias = %s,
+                cbu = %s,
+                cvu = %s
+            WHERE id_dato = 1
+            """,
+            (
+                request.form["nombre_cuenta"],
+                request.form["titular"],
+                request.form["banco"],
+                request.form["alias"],
+                request.form["cbu"],
+                request.form["cvu"]
+            )
+        )
+
+        conexion.commit()
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM datos_bancarios
+        WHERE activo = 1
+        LIMIT 1
+        """
+    )
+
+    datos = cursor.fetchone()
+
+    cursor.close()
+    conexion.close()
+
+    return render_template(
+        "admin_datos_bancarios.html",
+        datos=datos
+    )
