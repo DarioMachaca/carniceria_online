@@ -887,6 +887,19 @@ def pago_fallido():
         "/comprobante"
     )
 
+@checkout_bp.route(
+    "/webhook/mercadopago",
+    methods=["POST"]
+)
+def webhook_mercadopago():
+
+    data = request.get_json()
+
+    print("WEBHOOK MP:")
+    print(data)
+
+    return "OK", 200
+
 
 @checkout_bp.route(
     "/comprobante"
@@ -1047,3 +1060,4 @@ def transferencia():
         mensaje_whatsapp=mensaje_whatsapp,
         telefono=telefono
     )
+

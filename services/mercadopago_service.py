@@ -62,6 +62,9 @@ def crear_preferencia(
 
         "external_reference":
             codigo_compra,
+        
+        "notification_url":
+            f"{os.getenv('URL_BASE')}/webhook/mercadopago",
 
         "back_urls": {
 
