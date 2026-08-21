@@ -15,6 +15,7 @@ from models.configuracion import obtener_configuracion
 from routes.admin_whatsapp import (
     admin_whatsapp_bp
 )
+from routes.sitemap import sitemap_bp
 
 load_dotenv()
 
@@ -79,6 +80,10 @@ app.register_blueprint(
 
 app.register_blueprint(
     admin_whatsapp_bp
+)
+
+app.register_blueprint(
+    sitemap_bp
 )
 
 if __name__ == "__main__":
