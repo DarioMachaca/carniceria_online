@@ -12,6 +12,17 @@ document.addEventListener(
 
                     const id = btn.dataset.id;
 
+                    const nombre =
+                    btn.dataset.nombre;
+
+                    const precio =
+                    parseFloat(
+                        btn.dataset.precio
+                    );
+
+                    const unidad =
+                    btn.dataset.unidad;
+
                     const respuesta =
                     await fetch(
                         `/ajax/agregar-carrito/${id}`
@@ -19,6 +30,38 @@ document.addEventListener(
 
                     const data =
                     await respuesta.json();
+
+                    if (
+                        typeof gtag !==
+                        "undefined"
+                    ) {
+
+                        const cantidadAgregada =
+                        unidad === "kg"
+                            ? 0.5
+                            : 1;
+
+                        gtag(
+                            "event",
+                            "add_to_cart",
+                            {
+                                currency: "ARS",
+                                value:
+                                    precio *
+                                    cantidadAgregada,
+                                items: [
+                                    {
+                                        item_id: id,
+                                        item_name: nombre,
+                                        price: precio,
+                                        quantity:
+                                            cantidadAgregada
+                                    }
+                                ]
+                            }
+                        );
+
+                    }
 
                     const cantidadElemento =
                     document.getElementById(
