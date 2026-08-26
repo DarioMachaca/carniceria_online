@@ -147,6 +147,17 @@ document.addEventListener(
 
                     const id = btn.dataset.id;
 
+                    const nombre =
+                    btn.dataset.nombre;
+
+                    const precio =
+                    parseFloat(
+                        btn.dataset.precio
+                    );
+
+                    const unidad =
+                    btn.dataset.unidad;
+
                     const respuesta =
                     await fetch(
                         `/ajax/quitar-carrito/${id}`
@@ -154,6 +165,38 @@ document.addEventListener(
 
                     const data =
                     await respuesta.json();
+
+                    if (
+                        typeof gtag !==
+                        "undefined"
+                    ) {
+
+                        const cantidadQuitada =
+                        unidad === "kg"
+                            ? 0.5
+                            : 1;
+
+                        gtag(
+                            "event",
+                            "remove_from_cart",
+                            {
+                                currency: "ARS",
+                                value:
+                                    precio *
+                                    cantidadQuitada,
+                                items: [
+                                    {
+                                        item_id: id,
+                                        item_name: nombre,
+                                        price: precio,
+                                        quantity:
+                                            cantidadQuitada
+                                    }
+                                ]
+                            }
+                        );
+
+                    }
 
                     if (data.cantidad === 0) {
 
