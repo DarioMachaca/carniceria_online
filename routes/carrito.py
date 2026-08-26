@@ -255,7 +255,9 @@ def ajax_agregar_carrito(id_producto):
     )
 
     cursor.execute("""
-        SELECT unidad_medida
+        SELECT
+            unidad_medida,
+            precio
         FROM productos
         WHERE id_producto = %s
     """, (id_producto,))
@@ -297,8 +299,43 @@ def ajax_agregar_carrito(id_producto):
 
     session["carrito"] = carrito
 
+    subtotal = (
+        cantidad_actual *
+        float(producto["precio"])
+    )
+
+    total_general = 0
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    for id_prod, cantidad in carrito.items():
+
+        cursor.execute("""
+            SELECT precio
+            FROM productos
+            WHERE id_producto = %s
+        """, (id_prod,))
+
+        prod = cursor.fetchone()
+
+        if prod:
+
+            total_general += (
+                float(cantidad)
+                * float(prod["precio"])
+            )
+
+    cursor.close()
+    conexion.close()
+
     return jsonify({
         "cantidad": cantidad_actual,
+        "subtotal": subtotal,
+        "total_general": total_general,
         "total_items": len(carrito)
     })
 
@@ -314,7 +351,9 @@ def ajax_quitar_carrito(id_producto):
     )
 
     cursor.execute("""
-        SELECT unidad_medida
+        SELECT
+            unidad_medida,
+            precio
         FROM productos
         WHERE id_producto = %s
     """, (id_producto,))
@@ -367,7 +406,42 @@ def ajax_quitar_carrito(id_producto):
 
     session["carrito"] = carrito
 
+    subtotal = (
+        cantidad_actual *
+        float(producto["precio"])
+    )
+
+    total_general = 0
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    for id_prod, cantidad in carrito.items():
+
+        cursor.execute("""
+            SELECT precio
+            FROM productos
+            WHERE id_producto = %s
+        """, (id_prod,))
+
+        prod = cursor.fetchone()
+
+        if prod:
+
+            total_general += (
+                float(cantidad)
+                * float(prod["precio"])
+            )
+
+    cursor.close()
+    conexion.close()
+
     return jsonify({
         "cantidad": cantidad_actual,
+        "subtotal": subtotal,
+        "total_general": total_general,
         "total_items": len(carrito)
     })

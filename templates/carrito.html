@@ -22,7 +22,10 @@ Mi Carrito
 
     {% for producto in productos %}
 
-        <div class="carrito-item">
+        <div
+            class="carrito-item"
+            id="producto-{{ producto.id_producto }}"
+        >
 
             <div class="carrito-info">
 
@@ -35,18 +38,27 @@ Mi Carrito
                 </div>
 
                 <div class="carrito-subtotal">
-                    Subtotal: <strong>$ {{ producto.subtotal }}</strong>
+                    Subtotal:
+                    <strong id="subtotal-{{ producto.id_producto }}">
+                        $ {{ producto.subtotal }}
+                    </strong>
                 </div>
 
             </div>
 
             <div class="carrito-controles">
 
-                <a href="/quitar-carrito/{{ producto.id_producto }}">
-                    <button class="btn-cantidad">-</button>
-                </a>
+                <button
+                    class="btn-cantidad btn-menos"
+                    data-id="{{ producto.id_producto }}"
+                >
+                    -
+                </button>
 
-                <span class="cantidad-num">
+                <span
+                    class="cantidad-num"
+                    id="cantidad-{{ producto.id_producto }}"
+                >
 
                     {{ producto.cantidad }}
 
@@ -58,9 +70,12 @@ Mi Carrito
 
                 </span>
 
-                <a href="/agregar-carrito/{{ producto.id_producto }}">
-                    <button class="btn-cantidad">+</button>
-                </a>
+                <button
+                    class="btn-cantidad btn-mas"
+                    data-id="{{ producto.id_producto }}"
+                >
+                    +
+                </button>
 
             </div>
 
@@ -80,7 +95,7 @@ Mi Carrito
 
 <section class="carrito-total">
 
-    <h3>
+    <h3 id="total-general">
         TOTAL: $ {{ total_general }}
     </h3>
 
