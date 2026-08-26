@@ -324,5 +324,25 @@ document
 
 </script>
 
+<script>
+
+if (
+    typeof gtag !== "undefined"
+) {
+
+    gtag(
+        "event",
+        "begin_checkout",
+        {
+            currency: "ARS",
+            value: {{ subtotal_general }},
+            items: {{ ga4_items | tojson }}
+        }
+    );
+
+}
+
+</script>
+
 {% endblock %}
 

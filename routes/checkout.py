@@ -102,11 +102,32 @@ def checkout():
     cursor.close()
     conexion.close()
 
+    ga4_items = []
+
+    for producto in productos:
+
+        ga4_items.append({
+            "item_id": str(
+                producto["id_producto"]
+            ),
+            "item_name":
+                producto["nombre"],
+            "price":
+                float(
+                    producto["precio"]
+                ),
+            "quantity":
+                float(
+                    producto["cantidad"]
+                )
+        })
+
     return render_template(
         "checkout.html",
         productos=productos,
         subtotal_general=subtotal_general,
-        zonas=zonas
+        zonas=zonas,
+        ga4_items=ga4_items
     )
 
 @checkout_bp.route(
