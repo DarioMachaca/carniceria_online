@@ -9,6 +9,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from datetime import datetime
+from utils.imagenes import guardar_imagen_optimizada
 
 from db import get_connection
 
@@ -509,9 +510,11 @@ def guardar_producto():
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(
-            archivo.filename
-        )
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -519,13 +522,11 @@ def guardar_producto():
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
-        )
-
-        archivo.save(
-            ruta
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1200,
+            alto_max=1200
         )
 
     conexion = get_connection()
@@ -673,9 +674,11 @@ def actualizar_producto(id_producto):
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(
-            archivo.filename
-        )
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -683,12 +686,12 @@ def actualizar_producto(id_producto):
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1200,
+            alto_max=1200
         )
-
-        archivo.save(ruta)
 
     cursor.execute("""
         UPDATE productos
@@ -819,9 +822,11 @@ def guardar_categoria():
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(
-            archivo.filename
-        )
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -829,12 +834,12 @@ def guardar_categoria():
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1200,
+            alto_max=1200
         )
-
-        archivo.save(ruta)
 
     cursor.execute("""
         INSERT INTO categorias
@@ -930,9 +935,11 @@ def actualizar_categoria(id_categoria):
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(
-            archivo.filename
-        )
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -940,12 +947,12 @@ def actualizar_categoria(id_categoria):
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1200,
+            alto_max=1200
         )
-
-        archivo.save(ruta)
 
     cursor.execute("""
         UPDATE categorias
@@ -1222,7 +1229,11 @@ def guardar_promocion():
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(archivo.filename)
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -1230,12 +1241,12 @@ def guardar_promocion():
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1600,
+            alto_max=600
         )
-
-        archivo.save(ruta)
 
     cursor.execute("""
         INSERT INTO promociones
@@ -1303,7 +1314,11 @@ def actualizar_promocion(id):
 
     if archivo and archivo.filename:
 
-        imagen_nombre = secure_filename(archivo.filename)
+        nombre_base = os.path.splitext(
+            secure_filename(archivo.filename)
+        )[0]
+
+        imagen_nombre = f"{nombre_base}.jpg"
 
         ruta = os.path.join(
             "uploads",
@@ -1311,12 +1326,12 @@ def actualizar_promocion(id):
             imagen_nombre
         )
 
-        os.makedirs(
-            os.path.dirname(ruta),
-            exist_ok=True
+        guardar_imagen_optimizada(
+            archivo,
+            ruta,
+            ancho_max=1600,
+            alto_max=600
         )
-
-        archivo.save(ruta)
 
         cursor.execute("""
             UPDATE promociones
