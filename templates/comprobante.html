@@ -154,4 +154,33 @@ Pedido confirmado
 
 </section>
 
+{% if datos.estado_pago == "aprobado" %}
+
+<script>
+
+if (
+    typeof gtag !== "undefined"
+) {
+
+    gtag(
+        "event",
+        "purchase",
+        {
+            transaction_id:
+                "{{ datos.codigo_compra }}",
+
+            value:
+                {{ datos.total }},
+
+            currency:
+                "ARS"
+        }
+    );
+
+}
+
+</script>
+
+{% endif %}
+
 {% endblock %}
