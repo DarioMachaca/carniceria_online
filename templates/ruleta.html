@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ruleta de la Primavera
+{% endblock %}
+
+{% block content %}
+
+<section class="ruleta-page">
+
+    <div class="ruleta-header">
+
+        <h2>
+            🎡 RULETA DE LA PRIMAVERA
+        </h2>
+
+        <p>
+            Ingresá tus datos, girá la ruleta y descubrí si ganaste un premio.
+        </p>
+
+    </div>
+
+    <div class="ruleta-card">
+
+        <form
+            id="form-ruleta"
+            action="{{ url_for('ruleta.girar_ruleta') }}"
+            method="POST"
+            class="ruleta-form"
+        >
+
+            <div class="form-group">
+
+                <label>
+                    Código del Cartoncito
+                </label>
+
+                <input
+                    type="text"
+                    name="codigo"
+                    placeholder="Ej: PRI000123"
+                    required
+                    maxlength="20"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Tu nombre"
+                    required
+                    maxlength="100"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    WhatsApp
+                </label>
+
+                <input
+                    type="tel"
+                    name="telefono"
+                    placeholder="3881234567"
+                    required
+                    maxlength="20"
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-girar"
+            >
+                🎡 GIRAR LA RULETA
+            </button>
+
+        </form>
+        
+        <div class="ruleta-container">
+
+            <div class="flecha-ruleta">
+                ▼
+            </div>
+
+            <div class="ruleta-wrapper">
+
+                <div id="ruleta" class="ruleta-svg-container">
+
+                    <svg
+                        id="ruleta-svg"
+                        class="ruleta-svg"
+                        viewBox="0 0 400 400"
+                    >
+
+                        <circle
+                            cx="200"
+                            cy="200"
+                            r="195"
+                            fill="#ffffff"
+                            stroke="#F23041"
+                            stroke-width="10"
+                        />
+
+                        <!-- Sectores -->
+
+                        <path d="M200 200 L200 5 A195 195 0 0 1 315 42 Z"
+                            fill="#F23041"/>
+
+                        <path d="M200 200 L315 42 A195 195 0 0 1 386 140 Z"
+                            fill="#FFD54F"/>
+
+                        <path d="M200 200 L386 140 A195 195 0 0 1 386 260 Z"
+                            fill="#81C784"/>
+
+                        <path d="M200 200 L386 260 A195 195 0 0 1 315 358 Z"
+                            fill="#64B5F6"/>
+
+                        <path d="M200 200 L315 358 A195 195 0 0 1 200 395 Z"
+                            fill="#BA68C8"/>
+
+                        <path d="M200 200 L200 395 A195 195 0 0 1 85 358 Z"
+                            fill="#FF8A65"/>
+
+                        <path d="M200 200 L85 358 A195 195 0 0 1 14 260 Z"
+                            fill="#4DB6AC"/>
+
+                        <path d="M200 200 L14 260 A195 195 0 0 1 14 140 Z"
+                            fill="#A1887F"/>
+
+                        <path d="M200 200 L14 140 A195 195 0 0 1 85 42 Z"
+                            fill="#90A4AE"/>
+
+                        <path d="M200 200 L85 42 A195 195 0 0 1 200 5 Z"
+                            fill="#E57373"/>
+                        
+                        <text x="230" y="60" text-anchor="middle" font-size="13" font-weight="bold" fill="white">
+                            20%
+                        </text>
+                        <text x="230" y="75" text-anchor="middle" font-size="11" fill="white">
+                            Desc.
+                        </text>
+
+                        <text x="325" y="95" text-anchor="middle" font-size="13" font-weight="bold">
+                            10%
+                        </text>
+                        <text x="325" y="110" text-anchor="middle" font-size="11">
+                            Desc.
+                        </text>
+
+                        <text x="360" y="200" text-anchor="middle" font-size="13" font-weight="bold">
+                            5%
+                        </text>
+                        <text x="360" y="215" text-anchor="middle" font-size="11">
+                            Desc.
+                        </text>
+
+                        <text x="320" y="310" text-anchor="middle" font-size="12" font-weight="bold">
+                            Seguí
+                        </text>
+                        <text x="320" y="325" text-anchor="middle" font-size="11">
+                            Particip.
+                        </text>
+
+                        <text x="230" y="355" text-anchor="middle" font-size="12" font-weight="bold">
+                            Combo
+                        </text>
+                        <text x="230" y="370" text-anchor="middle" font-size="11">
+                            Burger
+                        </text>
+
+                        <text x="140" y="355" text-anchor="middle" font-size="12" font-weight="bold">
+                            Combo
+                        </text>
+                        <text x="140" y="370" text-anchor="middle" font-size="11">
+                            Milas
+                        </text>
+
+                        <text x="65" y="305" text-anchor="middle" font-size="12" font-weight="bold">
+                            Mila
+                        </text>
+                        <text x="65" y="320" text-anchor="middle" font-size="11">
+                            XXL
+                        </text>
+
+                        <text x="50" y="205" text-anchor="middle" font-size="12" font-weight="bold">
+                            Gorra
+                        </text>
+
+                        <text x="90" y="100" text-anchor="middle" font-size="11" font-weight="bold">
+                            Seguí
+                        </text>
+                        <text x="90" y="115" text-anchor="middle" font-size="11">
+                            Particip.
+                        </text>
+
+                        <text x="165" y="55" text-anchor="middle" font-size="11" font-weight="bold">
+                            Envío
+                        </text>
+                        <text x="165" y="70" text-anchor="middle" font-size="11">
+                            Gratis
+                        </text>
+
+                    </svg>
+
+                </div>
+
+                <div class="ruleta-centro">
+                    FRICAR
+                </div>
+
+            </div>
+
+        </div>
+
+        <div
+            id="mensaje-ruleta"
+            class="mensaje-ruleta"
+            style="display:none;"
+        ></div>
+
+    </div>
+
+    <div class="premios-preview">
+
+        <h3>
+            Premios que podés ganar
+        </h3>
+
+        <div class="premios-grid">
+
+            <div>🎁 20% Descuento</div>
+            <div>🎁 10% Descuento</div>
+            <div>🎁 5% Descuento</div>
+            <div>🚚 Envío Gratis</div>
+            <div>🍔 Combo Hamburguesas</div>
+            <div>🥪 Combo Milanesas Sándwich</div>
+            <div>🥩 Mila XXL</div>
+            <div>🧢 Gorra</div>
+
+        </div>
+
+    </div>
+
+    <div
+        id="modal-ruleta"
+        class="modal-ruleta"
+    >
+
+        <div class="modal-contenido">
+
+            <button
+                id="cerrar-modal-x"
+                class="cerrar-modal-x"
+            >
+                ✕
+            </button>
+
+            <div id="modal-body"></div>
+
+            <button
+                id="cerrar-modal"
+                class="btn-modal"
+            >
+                Ir a la Tienda
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/ruleta.js') }}"></script>
+
+{% endblock %}

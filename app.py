@@ -16,6 +16,7 @@ from routes.admin_whatsapp import (
     admin_whatsapp_bp
 )
 from routes.sitemap import sitemap_bp
+from routes.ruleta import ruleta_bp
 
 load_dotenv()
 
@@ -84,6 +85,10 @@ app.register_blueprint(
 
 app.register_blueprint(
     sitemap_bp
+)
+
+app.register_blueprint(
+    ruleta_bp
 )
 
 if __name__ == "__main__":
