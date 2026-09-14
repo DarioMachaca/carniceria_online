@@ -13,10 +13,20 @@
     <title>
 
         {% block title %}
-        Carnicería Demo
+        Carnicería Fricar
         {% endblock %}
 
     </title>
+
+    <meta
+        name="description"
+        content="{% block meta_description %}Carnicería Fricar en San Pedro de Jujuy. Carnes, milanesas, embutidos y delivery a domicilio.{% endblock %}"
+    >
+
+    <link
+        rel="canonical"
+        href="{{ canonical_url }}"
+    >
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JEB1SECBC5"></script>

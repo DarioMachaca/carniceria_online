@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import session
+from flask import request
 from flask import send_from_directory
 from dotenv import load_dotenv
 import os
@@ -51,10 +52,20 @@ def variables_globales():
 
     config = obtener_configuracion()
 
+    url_base = os.getenv(
+        "URL_BASE",
+        ""
+    )
+
+    canonical_url = (
+        f"{url_base}{request.path}"
+    )
+
     return dict(
         cantidad_items=cantidad_items,
         display=display,
-        config=config
+        config=config,
+        canonical_url=canonical_url
     )
 
 app.register_blueprint(home_bp)
