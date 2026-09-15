@@ -2095,6 +2095,10 @@ def guardar_nosotros():
         "/admin/nosotros"
     )
 
+#================================
+# CONFIGURAR DATOS BANCARIOS
+#================================
+
 @admin_bp.route(
     "/admin/datos-bancarios",
     methods=["GET", "POST"]
@@ -2152,3 +2156,124 @@ def datos_bancarios():
         "admin_datos_bancarios.html",
         datos=datos
     )
+
+#================================
+# RULETA PARTICIPANTES
+#================================
+
+@admin_bp.route(
+    "/admin/ruleta"
+)
+@login_requerido
+def admin_ruleta():
+
+    buscar = request.args.get(
+        "buscar",
+        ""
+    ).strip()
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    if buscar:
+
+        cursor.execute("""
+            SELECT
+                id_ruleta_participantes,
+                codigo,
+                nombre,
+                telefono,
+                premio,
+                fecha,
+                retirado
+            FROM ruleta_participantes
+            WHERE
+                nombre LIKE %s
+                OR telefono LIKE %s
+                OR codigo LIKE %s
+            ORDER BY fecha DESC
+        """, (
+            f"%{buscar}%",
+            f"%{buscar}%",
+            f"%{buscar}%"
+        ))
+
+    else:
+
+        cursor.execute("""
+            SELECT
+                id_ruleta_participantes,
+                codigo,
+                nombre,
+                telefono,
+                premio,
+                fecha,
+                retirado
+            FROM ruleta_participantes
+            ORDER BY fecha DESC
+        """)
+    
+    participantes = cursor.fetchall()
+
+    pendientes = sum(
+        1 for p in participantes
+        if p["retirado"] == 0
+    )
+
+    retirados = sum(
+        1 for p in participantes
+        if p["retirado"] == 1
+    )
+
+    cursor.close()
+    conexion.close()
+
+    return render_template(
+        "admin_ruleta.html",
+        participantes=participantes,
+        pendientes=pendientes,
+        retirados=retirados,
+        buscar=buscar
+    )
+
+@admin_bp.route(
+    "/admin/ruleta/retirar/<int:id>",
+    methods=["POST"]
+)
+@login_requerido
+def ruleta_marcar_retirado(id):
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute("""
+        SELECT retirado
+        FROM ruleta_participantes
+        WHERE id_ruleta_participantes = %s
+    """, (id,))
+
+    participante = cursor.fetchone()
+
+    nuevo_estado = 0 if participante["retirado"] else 1
+
+    cursor.execute("""
+        UPDATE ruleta_participantes
+        SET retirado = %s
+        WHERE id_ruleta_participantes = %s
+    """, (
+        nuevo_estado,
+        id
+    ))
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect("/admin/ruleta")

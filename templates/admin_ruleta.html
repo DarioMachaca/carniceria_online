@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ruleta
+{% endblock %}
+
+{% block content %}
+
+<h2>🎡 Administración Ruleta de la Primavera</h2>
+
+<p>
+    Participantes registrados: <strong>{{ participantes|length }}</strong>
+</p>
+
+<div class="admin-grid">
+
+    <div class="admin-card">
+        <h3>Total</h3>
+        <p>{{ participantes|length }}</p>
+    </div>
+
+    <div class="admin-card">
+        <h3>Pendientes</h3>
+        <p>{{ pendientes }}</p>
+    </div>
+
+    <div class="admin-card">
+        <h3>Retirados</h3>
+        <p>{{ retirados }}</p>
+    </div>
+
+</div>
+
+<form method="GET" class="admin-filtros">
+
+    <input
+        type="text"
+        name="buscar"
+        placeholder="Buscar por nombre, teléfono o código..."
+        value="{{ buscar or '' }}"
+    >
+
+    <button type="submit" class="btn-admin">
+        Buscar
+    </button>
+
+    <a href="/admin/ruleta" class="btn-admin">
+        Ver todos
+    </a>
+
+</form>
+
+{% if participantes %}
+
+<table class="admin-table">
+
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Premio</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Retirado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for p in participantes %}
+
+        <tr>
+
+            <td>{{ p.codigo }}</td>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.telefono }}</td>
+            <td>{{ p.premio }}</td>
+            <td>{{ p.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+
+            <td>
+                {% if p.retirado == 1 %}
+                    ✅ Retirado
+                {% else %}
+                    ⏳ Pendiente
+                {% endif %}
+            </td>
+
+            <td>
+
+                <form method="POST"
+                    action="/admin/ruleta/retirar/{{ p.id_ruleta_participantes }}">
+
+                    <input
+                        type="checkbox"
+                        onchange="this.form.submit()"
+                        {% if p.retirado == 1 %}
+                            checked
+                        {% endif %}
+                    >
+
+                </form>
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<div class="admin-card">
+
+    <h3>🎡 Sin participantes</h3>
+
+    <p>
+        Todavía no hay registros en la ruleta.
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
