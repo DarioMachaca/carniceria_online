@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}
+Raspadita Día de la Madre Fricar | Participá y Ganá Premios
+{% endblock %}
+
+{% block meta_description %}
+Participá de la Raspadita del Día de la Madre de Fricar y descubrí si ganaste un premio.
+{% endblock %}
+
+{% block content %}
+
+<section class="ruleta-page">
+
+    <div class="ruleta-header">
+
+        <h2>
+            🌷 RASPADITA DÍA DE LA MADRE 🌷
+        </h2>
+
+        <p>
+            Ingresá tus datos, raspá la tarjeta y descubrí si ganaste un premio.
+        </p>
+
+    </div>
+
+    <div class="ruleta-card">
+
+        <form
+            id="form-raspadita"
+            action="{{ url_for('raspadita.revelar_raspadita') }}"
+            method="POST"
+            class="ruleta-form"
+        >
+
+            <div class="form-group">
+
+                <label>
+                    Código del Cartoncito
+                </label>
+
+                <input
+                    type="text"
+                    name="codigo"
+                    placeholder="Ej: MAD000123"
+                    required
+                    maxlength="20"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Tu nombre"
+                    required
+                    maxlength="100"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    WhatsApp
+                </label>
+
+                <input
+                    type="tel"
+                    name="telefono"
+                    placeholder="3881234567"
+                    required
+                    maxlength="20"
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-girar"
+            >
+                🌷 OBTENER RASPADITA
+            </button>
+
+        </form>
+
+        <div
+            id="raspadita-container"
+            class="raspadita-container"
+            style="display:none;"
+        >
+
+            <div class="raspadita-card">
+
+                <div
+                    id="premio-oculto"
+                    class="premio-oculto"
+                >
+
+                    <h2>
+                        🎉 FELICITACIONES 🎉
+                    </h2>
+
+                    <h3 id="texto-premio"></h3>
+
+                    <p>
+                        Raspa toda la superficie para descubrir tu premio.
+                    </p>
+
+                </div>
+
+                <canvas
+                    id="canvas-raspadita"
+                    width="350"
+                    height="220"
+                ></canvas>
+
+            </div>
+
+        </div>
+
+        <div
+            id="mensaje-raspadita"
+            class="mensaje-ruleta"
+            style="display:none;"
+        ></div>
+
+    </div>
+
+    <div class="premios-preview">
+
+        <h3>
+            Premios que podés ganar
+        </h3>
+
+        <div class="premios-grid">
+
+            <div>🎁 20% Descuento</div>
+            <div>🎁 15% Descuento</div>
+            <div>🎁 10% Descuento</div>
+            <div>🚚 Envío Gratis</div>
+            <div>🍔 Combo Hamburguesas</div>
+            <div>🥪 Combo Milanesas</div>
+            <div>🎁 Premio Sorpresa</div>
+            <div>🌷 Regalo para Mamá</div>
+
+        </div>
+
+    </div>
+
+    <div
+        id="modal-raspadita"
+        class="modal-ruleta"
+    >
+
+        <div class="modal-contenido">
+
+            <button
+                id="cerrar-modal-x"
+                class="cerrar-modal-x"
+            >
+                ✕
+            </button>
+
+            <div id="modal-body"></div>
+
+            <button
+                id="cerrar-modal"
+                class="btn-modal"
+            >
+                Ir a la Tienda
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/raspadita.js') }}"></script>
+
+{% endblock %}
