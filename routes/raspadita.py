@@ -30,6 +30,33 @@ def revelar_raspadita():
     nombre = request.form["nombre"].strip()
     telefono = request.form["telefono"].strip()
 
+    acepta_promociones = 1 if request.form.get(
+        "acepta_promociones"
+    ) else 0
+
+    fecha_nacimiento = None
+
+    if acepta_promociones:
+
+        dia_cumple = request.form.get(
+            "dia_cumple"
+        )
+
+        mes_cumple = request.form.get(
+            "mes_cumple"
+        )
+
+        if not dia_cumple or not mes_cumple:
+
+            return jsonify({
+                "ok": False,
+                "mensaje": "Debés indicar tu cumpleaños."
+            })
+
+        fecha_nacimiento = (
+            f"2000-{int(mes_cumple):02d}-{int(dia_cumple):02d}"
+        )
+
     conexion = get_connection()
 
     cursor = conexion.cursor(
@@ -105,10 +132,14 @@ def revelar_raspadita():
             codigo,
             nombre,
             telefono,
-            premio
+            premio,
+            fecha_nacimiento,
+            acepta_promociones
         )
         VALUES
         (
+            %s,
+            %s,
             %s,
             %s,
             %s,
@@ -118,7 +149,9 @@ def revelar_raspadita():
         codigo,
         nombre,
         telefono,
-        premio
+        premio,
+        fecha_nacimiento,
+        acepta_promociones
     ))
 
     # Marcar código utilizado

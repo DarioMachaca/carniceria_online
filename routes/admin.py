@@ -2277,3 +2277,140 @@ def ruleta_marcar_retirado(id):
     conexion.close()
 
     return redirect("/admin/ruleta")
+
+#================================
+# RASPADITA PARTICIPANTES
+#================================
+
+@admin_bp.route(
+    "/admin/raspadita"
+)
+@login_requerido
+def admin_raspadita():
+
+    buscar = request.args.get(
+        "buscar",
+        ""
+    ).strip()
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    if buscar:
+
+        cursor.execute("""
+            SELECT
+                id_raspadita_participantes,
+                codigo,
+                nombre,
+                telefono,
+                premio,
+                fecha,
+                retirado,
+                fecha_nacimiento,
+                acepta_promociones
+            FROM raspadita_participantes
+            WHERE
+                nombre LIKE %s
+                OR telefono LIKE %s
+                OR codigo LIKE %s
+            ORDER BY fecha DESC
+        """, (
+            f"%{buscar}%",
+            f"%{buscar}%",
+            f"%{buscar}%"
+        ))
+
+    else:
+
+        cursor.execute("""
+            SELECT
+                id_raspadita_participantes,
+                codigo,
+                nombre,
+                telefono,
+                premio,
+                fecha,
+                retirado,
+                fecha_nacimiento,
+                acepta_promociones
+            FROM raspadita_participantes
+            ORDER BY fecha DESC
+        """)
+
+    participantes = cursor.fetchall()
+
+    pendientes = sum(
+        1 for p in participantes
+        if p["retirado"] == 0
+    )
+
+    retirados = sum(
+        1 for p in participantes
+        if p["retirado"] == 1
+    )
+
+    promociones = sum(
+        1 for p in participantes
+        if p["acepta_promociones"] == 1
+    )
+
+    cursor.close()
+    conexion.close()
+
+    return render_template(
+        "admin_raspadita.html",
+        participantes=participantes,
+        pendientes=pendientes,
+        retirados=retirados,
+        promociones=promociones,
+        buscar=buscar
+    )
+
+@admin_bp.route(
+    "/admin/raspadita/retirar/<int:id>",
+    methods=["POST"]
+)
+@login_requerido
+def raspadita_marcar_retirado(id):
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor(
+        dictionary=True
+    )
+
+    cursor.execute("""
+        SELECT retirado
+        FROM raspadita_participantes
+        WHERE id_raspadita_participantes = %s
+    """, (id,))
+
+    participante = cursor.fetchone()
+
+    nuevo_estado = (
+        0 if participante["retirado"]
+        else 1
+    )
+
+    cursor.execute("""
+        UPDATE raspadita_participantes
+        SET retirado = %s
+        WHERE id_raspadita_participantes = %s
+    """, (
+        nuevo_estado,
+        id
+    ))
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(
+        "/admin/raspadita"
+    )
+

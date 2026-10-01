@@ -81,6 +81,86 @@ Participá de la Raspadita del Día de la Madre de Fricar y descubrí si ganaste
 
             </div>
 
+            <div class="cumple-box">
+
+                <h4>
+                    🎂 Beneficios de Cumpleaños
+                </h4>
+
+                <div class="form-group">
+
+                    <label class="checkbox-label">
+
+                        <input
+                            type="checkbox"
+                            id="acepta_promociones"
+                            name="acepta_promociones"
+                            value="1"
+                        >
+
+                        Quiero recibir beneficios y promociones para mi cumpleaños
+
+                    </label>
+
+                </div>
+
+                <div
+                    id="cumple-container"
+                    style="display:none;"
+                >
+
+                    <div class="form-group">
+
+                        <label>
+                            Día de cumpleaños
+                        </label>
+
+                        <input
+                            type="number"
+                            id="dia_cumple"
+                            name="dia_cumple"
+                            min="1"
+                            max="31"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Mes de cumpleaños
+                        </label>
+
+                        <select
+                            id="mes_cumple"
+                            name="mes_cumple"
+                        >
+
+                            <option value="">
+                                Seleccionar mes
+                            </option>
+
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+            
+            </div>
+
             <button
                 type="submit"
                 class="btn-girar"
@@ -103,7 +183,7 @@ Participá de la Raspadita del Día de la Madre de Fricar y descubrí si ganaste
                     class="premio-oculto"
                 >
 
-                    <h2>
+                    <h2 id="titulo-premio">
                         🎉 FELICITACIONES 🎉
                     </h2>
 
@@ -141,14 +221,29 @@ Participá de la Raspadita del Día de la Madre de Fricar y descubrí si ganaste
 
         <div class="premios-grid">
 
-            <div>🎁 20% Descuento</div>
-            <div>🎁 15% Descuento</div>
-            <div>🎁 10% Descuento</div>
-            <div>🚚 Envío Gratis</div>
-            <div>🍔 Combo Hamburguesas</div>
-            <div>🥪 Combo Milanesas</div>
-            <div>🎁 Premio Sorpresa</div>
-            <div>🌷 Regalo para Mamá</div>
+            <div>💸 20% Descuento</div>
+
+            <div>🏷️ 10% Descuento</div>
+
+            <div>💅 Servicio de Manicure</div>
+
+            <div>💆‍♀️ Masaje Relajante para Mamá</div>
+
+            <div>🥐 Desayuno para 2 Personas</div>
+
+            <div>🍽️ Cena para 2 Personas</div>
+
+            <div>🍔 Combo de Hamburguesas</div>
+
+            <div>🥪 Combo de Milanesas</div>
+
+            <div>🖊️ Lapiceras</div>
+
+            <div>🧢 Gorras</div>
+
+            <div>🥩 Productos Fricar</div>
+
+            <div>🎁 Y muchos premios más...</div>
 
         </div>
 

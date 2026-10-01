@@ -1,5 +1,57 @@
 console.log("Raspadita cargada");
 
+const checkboxPromociones =
+    document.getElementById(
+        "acepta_promociones"
+    );
+
+const cumpleContainer =
+    document.getElementById(
+        "cumple-container"
+    );
+
+const diaCumple =
+    document.getElementById(
+        "dia_cumple"
+    );
+
+const mesCumple =
+    document.getElementById(
+        "mes_cumple"
+    );
+
+if (checkboxPromociones) {
+
+    checkboxPromociones.addEventListener(
+        "change",
+        function() {
+
+            if (this.checked) {
+
+                cumpleContainer.style.display =
+                    "block";
+
+                diaCumple.required = true;
+                mesCumple.required = true;
+
+            } else {
+
+                cumpleContainer.style.display =
+                    "none";
+
+                diaCumple.required = false;
+                mesCumple.required = false;
+
+                diaCumple.value = "";
+                mesCumple.value = "";
+
+            }
+
+        }
+    );
+
+}
+
 const formulario =
     document.getElementById(
         "form-raspadita"
@@ -65,12 +117,36 @@ formulario.addEventListener(
         premioActual =
             resultado.premio;
 
-        document
-            .getElementById(
+        const tituloPremio =
+            document.getElementById(
+                "titulo-premio"
+            );
+
+        const textoPremio =
+            document.getElementById(
                 "texto-premio"
-            )
-            .innerHTML =
-            premioActual;
+            );
+
+        if (
+            premioActual ===
+            "Seguí Participando"
+        ) {
+
+            tituloPremio.innerHTML =
+                "😊 SEGUÍ PARTICIPANDO";
+
+            textoPremio.innerHTML =
+                "";
+
+        } else {
+
+            tituloPremio.innerHTML =
+                "🎉 FELICITACIONES 🎉";
+
+            textoPremio.innerHTML =
+                premioActual;
+
+        }
 
         document
             .querySelector(
